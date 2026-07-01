@@ -1,5 +1,6 @@
 # Imports
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import numpy as np
@@ -8,6 +9,15 @@ import pickle
 import gower
 
 app = FastAPI(title = "PAM Clustering API") # Name of the API
+
+# Allows for frontend and backend to communicate even with different ports
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 with open('pam_app_assets.pkl', 'rb') as f: # Opening pkl file containing 
     assets = pickle.load(f)
