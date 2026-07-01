@@ -1,1 +1,79 @@
+# Imports
 from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import List
+import numpy as np
+import pandas as pd
+import pickle
+import gower
+
+app = FastAPI(title = "PAM Clustering API") # Name of the API
+
+with open('pam_app_assets.pkl', 'rb') as f: # Opening pkl file containing 
+    assets = pickle.load(f)
+
+medoid_profiles = assets['medoid_profiles']
+features = assets['features']
+
+medoid_matrix = medoid_profiles[features].astype(object) # Makes sure that the code reads each column as the same type
+
+class StudentFeatures(BaseModel): # Object for containing student features
+    commuting_group: str
+    work_group: str
+    credits_bin: str
+    labs: str
+
+class StudentDataset(BaseModel):
+    students: List[StudentFeatures]
+
+@app.get("/") # Status returned when connected to the homepage
+def home(): 
+    return {"status": "API is online"}
+
+@app.post("/predict") # When data is inputted by the user
+def predict_group(dataset: StudentDataset):
+
+    input_df = pd.DataFrame([s.model_dump() for s in dataset.students])
+
+    credit_bin_order = ['1-11', '12-15', '16-18', '18+']
+    labs_order = ['0', '1', '2', '3 or more']
+
+    input_df['credits_bin'] = pd.Categorical(
+        input_df['credits_bin'],
+        categories = credit_bin_order,
+        ordered = True
+    )
+
+    input_df['labs'] = pd.Categorical(
+        input_df['labs'],
+        categories = labs_order,
+        ordered = True
+    )
+
+    medoid_matrix_ordered = medoid_matrix.copy()
+    medoid_matrix_ordered['credits_bin'] = pd.Categorical(
+        medoid_matrix_ordered['credits_bin'],
+        categories = credit_bin_order,
+        ordered = True
+    )
+
+    medoid_matrix_ordered['labs'] = pd.Categorical(
+        medoid_matrix_ordered['labs'],
+        categories = labs_order,
+        ordered = True
+    )
+
+    gower_matrix = gower.gower_matrix(input_df,  medoid_matrix_ordered) # Measures the distance of every row from the medoid
+
+    assigned_indices = np.argmin(gower_matrix, axis = 1) # Returns 1D np array of the metroid the row is closest to
+
+    results = []
+    for idx in assigned_indices:
+        results.append(
+            {
+                "group": int(medoid_profiles.iloc[idx]['group']),
+                "group_name": str(medoid_profiles.iloc[idx]['group_name'])
+            }
+        )
+
+    return {"Predictions": results}
