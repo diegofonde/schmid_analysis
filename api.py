@@ -50,20 +50,28 @@ def predict_group(dataset: StudentDataset):
         ordered = True
     )
 
+    input_df_gower = input_df[features].copy()
+    input_df_gower['credits_bin'] = input_df_gower['credits_bin'].cat.codes
+    input_df_gower['labs'] = input_df_gower['labs'].cat.codes
+
     medoid_matrix_ordered = medoid_matrix.copy()
     medoid_matrix_ordered['credits_bin'] = pd.Categorical(
         medoid_matrix_ordered['credits_bin'],
         categories = credit_bin_order,
         ordered = True
     )
-
     medoid_matrix_ordered['labs'] = pd.Categorical(
         medoid_matrix_ordered['labs'],
         categories = labs_order,
         ordered = True
     )
 
-    gower_matrix = gower.gower_matrix(input_df,  medoid_matrix_ordered) # Measures the distance of every row from the medoid
+    medoid_matrix_ordered['credits_bin'] = medoid_matrix_ordered['credits_bin'].cat.codes
+    medoid_matrix_ordered['labs'] = medoid_matrix_ordered['labs'].cat.codes
+
+    is_category = [True, True, False, False]
+
+    gower_matrix = gower.gower_matrix(input_df_gower,  medoid_matrix_ordered, cat_features= is_category) # Measures the distance of every row from the medoid
 
     assigned_indices = np.argmin(gower_matrix, axis = 1) # Returns 1D np array of the metroid the row is closest to
 
