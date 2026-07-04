@@ -18,6 +18,9 @@ if uploaded_file is not None:
     st.write("Data Preview: ")
     st.dataframe(raw_data.head())
 
+    if "cleaned_df" not in st.session_state:
+        st.session_state.cleaned_df = None
+
     if st.button("Clean Data"):
 
         cleaned_data = raw_data.copy()
@@ -51,47 +54,51 @@ if uploaded_file is not None:
 
         cleaned_data['labs'] = cleaned_data[labs_question]
 
-        st.write("Data Preview: ")
-        st.dataframe(cleaned_data.head())
+        st.session_state.cleaned_df = cleaned_data
+        st.success("Data has been cleaned")
 
-        if st.button("Run clustering algorithm"):
+        if st.session_state.cleaned_data is not None:
+            st.write("Data Preview: ")
+            st.dataframe(cleaned_data.head())
 
-            student_list = cleaned_data.to_dict(orient = "records") # Converts dataframe to a dictionary 
-            payload = {"students": student_list} # List that contains dictionary of student information to match API
+            if st.button("Run clustering algorithm"):
+
+                student_list = cleaned_data.to_dict(orient = "records") # Converts dataframe to a dictionary 
+                payload = {"students": student_list} # List that contains dictionary of student information to match API
 
 
-            with st.spinner("Calculating..."):
+                with st.spinner("Calculating..."):
 
-                try:
-                    response = requests.post(API_URL, json = payload)
+                    try:
+                        response = requests.post(API_URL, json = payload)
 
-                    if response.status_code == 200:
+                        if response.status_code == 200:
 
-                        predictions = response.json()["Predictions"]
+                            predictions = response.json()["Predictions"]
 
-                        # Putting API response back into the dataset
-                        group = []
-                        group_name = []
-                        for p in predictions: 
-                            group.append(p['group'])
-                            group_name.append(p['group_name'])
+                            # Putting API response back into the dataset
+                            group = []
+                            group_name = []
+                            for p in predictions: 
+                                group.append(p['group'])
+                                group_name.append(p['group_name'])
 
-                        raw_data["Predicted_Group"] = group
-                        raw_data["Predicted_Group_Name"] = group_name 
+                            raw_data["Predicted_Group"] = group
+                            raw_data["Predicted_Group_Name"] = group_name 
 
-                        csv_output = raw_data.to_csv(index = False).encode('utf-8')
-                        st.download_button(
-                            label = "📥 Download Segmented Dataset CSV",
-                            data = csv_output,
-                            file_name = "schmid_segmented_students.csv",
-                            mime = "text/csv"
-                        )
-                    else:
-                        st.error(f"The API returned an error code: {response.status_code}")
-                        st.caption(f"Error Details: {response.text}") 
+                            csv_output = raw_data.to_csv(index = False).encode('utf-8')
+                            st.download_button(
+                                label = "📥 Download Segmented Dataset CSV",
+                                data = csv_output,
+                                file_name = "schmid_segmented_students.csv",
+                                mime = "text/csv"
+                            )
+                        else:
+                            st.error(f"The API returned an error code: {response.status_code}")
+                            st.caption(f"Error Details: {response.text}") 
 
-                except requests.exceptions.ConnectionError:
+                    except requests.exceptions.ConnectionError:
 
-                    st.error("Could not establish connection to the server")
-                    st.error("If the server has been inactive for awhile, render may need to take 60 seconds to reactivate.")
+                        st.error("Could not establish connection to the server")
+                        st.error("If the server has been inactive for awhile, render may need to take 60 seconds to reactivate.")
 
