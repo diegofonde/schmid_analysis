@@ -57,13 +57,15 @@ if uploaded_file is not None:
         st.session_state.cleaned_df = cleaned_data
         st.success("Data has been cleaned")
 
-    if st.session_state.cleaned_data is not None:
+    if st.session_state.cleaned_df is not None:
             st.write("Data Preview: ")
             st.dataframe(st.session_state.cleaned_df.head())
 
             if st.button("Run clustering algorithm"):
 
-                student_list = cleaned_data.to_dict(orient = "records") # Converts dataframe to a dictionary 
+                df_clustering = st.session_state.cleaned_df.copy()
+
+                student_list = df_clustering.to_dict(orient = "records") # Converts dataframe to a dictionary 
                 payload = {"students": student_list} # List that contains dictionary of student information to match API
 
 
@@ -83,10 +85,10 @@ if uploaded_file is not None:
                                 group.append(p['group'])
                                 group_name.append(p['group_name'])
 
-                            raw_data["Predicted_Group"] = group
-                            raw_data["Predicted_Group_Name"] = group_name 
+                            df_clustering["Predicted_Group"] = group
+                            df_clustering["Predicted_Group_Name"] = group_name 
 
-                            csv_output = raw_data.to_csv(index = False).encode('utf-8')
+                            csv_output = df_clustering.to_csv(index = False).encode('utf-8')
                             st.download_button(
                                 label = "📥 Download Segmented Dataset CSV",
                                 data = csv_output,
