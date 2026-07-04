@@ -51,6 +51,9 @@ if uploaded_file is not None:
 
         cleaned_data['labs'] = cleaned_data[labs_question]
 
+        st.write("Data Preview: ")
+        st.dataframe(cleaned_data.head())
+
         if st.button("Run clustering algorithm"):
 
             student_list = cleaned_data.to_dict(orient = "records") # Converts dataframe to a dictionary 
