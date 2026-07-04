@@ -57,9 +57,9 @@ if uploaded_file is not None:
         st.session_state.cleaned_df = cleaned_data
         st.success("Data has been cleaned")
 
-        if st.session_state.cleaned_data is not None:
+    if st.session_state.cleaned_data is not None:
             st.write("Data Preview: ")
-            st.dataframe(cleaned_data.head())
+            st.dataframe(st.session_state.cleaned_df.head())
 
             if st.button("Run clustering algorithm"):
 
@@ -101,4 +101,5 @@ if uploaded_file is not None:
 
                         st.error("Could not establish connection to the server")
                         st.error("If the server has been inactive for awhile, render may need to take 60 seconds to reactivate.")
+    
 
