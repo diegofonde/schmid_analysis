@@ -40,7 +40,7 @@ if uploaded_file is not None:
             choices = ['not working']
             cleaned_data['work_group'] = np.select(conditions, choices, default = 'working')
 
-        if working_question in cleaned_data.columns:
+        if credits_question in cleaned_data.columns:
 
             cleaned_data['credits_bin'] = pd.cut(
                 cleaned_data['credits'],
