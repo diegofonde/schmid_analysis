@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.title("PAM Clustering Model")
 st.markdown("Here is the page dedicated to clustering students based on the inputted dataset!")
