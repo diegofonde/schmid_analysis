@@ -43,7 +43,7 @@ if uploaded_file is not None:
         if credits_question in cleaned_data.columns:
 
             cleaned_data['credits_bin'] = pd.cut(
-                cleaned_data['credits'],
+                cleaned_data[credits_question],
                 bins = [0, 11.9, 15.1, 18.1, 100],
                 labels = ['1-11', '12-15', '16-18', '18+']
             )
