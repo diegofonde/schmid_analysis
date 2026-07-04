@@ -90,13 +90,8 @@ if uploaded_file is not None:
                             df_clustering["Predicted_Group"] = group
                             df_clustering["Predicted_Group_Name"] = group_name 
 
-                            csv_output = df_clustering.to_csv(index = False).encode('utf-8')
-                            st.download_button(
-                                label = "📥 Download Segmented Dataset CSV",
-                                data = csv_output,
-                                file_name = "schmid_segmented_students.csv",
-                                mime = "text/csv"
-                            )
+                            st.session_state["df_clustered_results"] = df_clustering
+
                         else:
                             st.error(f"The API returned an error code: {response.status_code}")
                             st.caption(f"Error Details: {response.text}") 
@@ -105,5 +100,48 @@ if uploaded_file is not None:
 
                         st.error("Could not establish connection to the server")
                         st.error("If the server has been inactive for awhile, render may need to take 60 seconds to reactivate.")
+                
+                if "df_clustered_results" in st.session_state:
+
+                    df_final = st.session_state["df_clustered_results"]
+
+                    st.write("----")
+                    st.subheader("🔍 Individual Student Cluster Breakdown")
+                    st.markdown("Select a student and a metric to visualize exactly why they were assigned to their specific cluster.")
+
+                    # Dropdowns for filtering between studeets and variables
+                    student_ids = df_final['student_id'].tolist()
+                    student_select = st.selectbox("Select a student", options = student_ids)
+                    variable_select = st.selectbox("Select a variable", options=['commuting_group', 'work_group', 'credits_bin', 'labs'])
+
+                    if student_select is not None and variable_select is not None:
+                        student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
+
+                        category_distributions = df_final.groupby(['Group_Name', variable_select].size().unstack(fill_value = 0))
+                        category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
+
+                        category_distributions_melted = category_distributions_pct.melt(id_vars = 'Group_Name', value_name='Percentage')
+
+
+                        fig = px.bar(
+                            category_distributions_melted,
+                            x = "Group Name",
+                            y = "Percentage",
+                            color = variable_select,
+                            barmode = 'group',
+                            title = f"Categorical Proportions of {variable_select} Across Clusters",
+                            labels = {'Percentage': 'Proportion of Cluster Population'}
+                        )
+
+                        st.plotly_chart(fig, use_container_width=True)
+
+                    csv_output = df_final.to_csv(index = False).encode('utf-8')
+                    st.download_button(
+                        label = "📥 Download Segmented Dataset CSV",
+                        data = csv_output,
+                        file_name = "schmid_segmented_students.csv",
+                        mime = "text/csv",
+                        key = "download_bottom" # Unique key prevents Streamlit errors
+                    )
     
 
