@@ -101,7 +101,7 @@ if uploaded_file is not None:
                         st.error("Could not establish connection to the server")
                         st.error("If the server has been inactive for awhile, render may need to take 60 seconds to reactivate.")
                 
-                if "df_clustered_results" in st.session_state:
+            if "df_clustered_results" in st.session_state:
 
                     df_final = st.session_state["df_clustered_results"]
 
@@ -117,15 +117,13 @@ if uploaded_file is not None:
                     if student_select is not None and variable_select is not None:
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
 
-                        category_distributions = df_final.groupby(['Group_Name', variable_select].size().unstack(fill_value = 0))
+                        category_distributions = df_final.groupby(['Predicted_Group_Name', variable_select]).size().unstack(fill_value=0)
                         category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
-
-                        category_distributions_melted = category_distributions_pct.melt(id_vars = 'Group_Name', value_name='Percentage')
-
+                        category_distributions_melted = category_distributions_pct.melt(id_vars='Predicted_Group_Name', value_name='Percentage')
 
                         fig = px.bar(
                             category_distributions_melted,
-                            x = "Group Name",
+                            x = "Predicted_Group_Name",
                             y = "Percentage",
                             color = variable_select,
                             barmode = 'group',
