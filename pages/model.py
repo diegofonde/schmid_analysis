@@ -52,7 +52,7 @@ if uploaded_file is not None:
             )
             cleaned_data['credits_bin'] = cleaned_data['credits_bin'].astype(str)
 
-        cleaned_data['labs'] = cleaned_data[labs_question]
+        cleaned_data['labs'] = cleaned_data[labs_question].astype(str)
 
         st.session_state.cleaned_df = cleaned_data
         st.success("Data has been cleaned")
