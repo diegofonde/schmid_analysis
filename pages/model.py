@@ -112,26 +112,28 @@ if uploaded_file is not None:
                     # Dropdowns for filtering between studeets and variables
                     student_ids = df_final['student_id'].tolist()
                     student_select = st.selectbox("Select a student", options = student_ids)
-                    variable_select = st.selectbox("Select a variable", options=['commuting_group', 'work_group', 'credits_bin', 'labs'])
+                    variable_select_one = st.selectbox("Select a variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
+                    variable_select_two = st.selectbox("Select a variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
 
-                    if student_select is not None and variable_select is not None:
+                    if student_select is not None and variable_select_one is not None and variable_select_two:
+                        
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
 
-                        category_distributions = df_final.groupby(['Predicted_Group_Name', variable_select]).size().unstack(fill_value=0)
-                        category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
-                        category_distributions_melted = category_distributions_pct.melt(id_vars='Predicted_Group_Name', value_name='Percentage')
+                        # category_distributions = df_final.groupby(['Predicted_Group_Name', variable_select]).size().unstack(fill_value=0)
+                        # category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
+                        # category_distributions_melted = category_distributions_pct.melt(id_vars='Predicted_Group_Name', value_name='Percentage')
 
-                        fig = px.bar(
-                            category_distributions_melted,
-                            x = "Predicted_Group_Name",
-                            y = "Percentage",
-                            color = variable_select,
-                            barmode = 'group',
-                            title = f"Categorical Proportions of {variable_select} Across Clusters",
-                            labels = {'Percentage': 'Proportion of Cluster Population'}
-                        )
+                        # fig = px.bar(
+                        #     category_distributions_melted,
+                        #     x = "Predicted_Group_Name",
+                        #     y = "Percentage",
+                        #     color = variable_select,
+                        #     barmode = 'group',
+                        #     title = f"Categorical Proportions of {variable_select} Across Clusters",
+                        #     labels = {'Percentage': 'Proportion of Cluster Population'}
+                        # )
 
-                        st.plotly_chart(fig, use_container_width=True)
+                        # st.plotly_chart(fig, use_container_width=True)
 
                     csv_output = df_final.to_csv(index = False).encode('utf-8')
                     st.download_button(

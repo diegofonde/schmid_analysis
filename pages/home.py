@@ -11,6 +11,8 @@ Orginally my role as a Student Assistant started off simple data cleaning and an
 ### Features include:
 1. **Page Dedicated for Dashboard:** View macro-level metrics and trends instantly.
 2. **Clustering Algorithm:** Access the machine learning pipeline to segment profiles.
+            
+This webapp is still a WIP, and developments are ongoing.
 
 _All features are created by Diego Fondevilla under Kate Hill's supervision :))_
 """)
