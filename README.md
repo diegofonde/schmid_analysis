@@ -1,6 +1,6 @@
 # 📊 Schmid College Student Resource Optimization
 
-> **Project Overview (Ongoing):** Built an end-to-end data pipeline, predictive clustering model, and interactive dashboard ecosystem to analyze resource utilization trends for 400+ students, directly influencing department budget allocations[cite: 1].
+> **Project Overview (Ongoing):** Built an end-to-end data pipeline, predictive clustering model, and interactive dashboard ecosystem to analyze resource utilization trends for 400+ students, directly influencing department budget allocations.
 
 ## 🚀 Live Links & Assets
 * **Interactive Dashboard:** https://public.tableau.com/app/profile/diego.gabriel.fondevilla/viz/Schmid_Survey/StudentProfile?publish=yes
@@ -11,7 +11,7 @@
 
 ## 🛠️ Tech Stack & Architecture
 * **Data Ingestion & Quality:** Python, SQLite (In development)
-* **Statistical Modeling & ML:** R, Partitioning Around Medoids (PAM), Hierarchical Clustering, Gower’s Distance Matrix[cite: 1]
+* **Statistical Modeling & ML:** R, Partitioning Around Medoids (PAM), Hierarchical Clustering, Gower’s Distance Matrix
 * **Deployment & Engineering:** FastAPI, Uvicorn, Render, Streamlit
 * **Business Intelligence:** Tableau
 
@@ -28,17 +28,17 @@
 
 ### 1. Data Processing & Distance Metrics
 Because the dataset contained mixed data types (categorical survey responses and numerical engagement metrics), standard Euclidean distance metrics were insufficient. 
-* Implemented a **Gower’s Distance Matrix** to mathematically compute dissimilarity across mixed data features[cite: 1].
+* Implemented a **Gower’s Distance Matrix** to mathematically compute dissimilarity across mixed data features.
 
 ### 2. Clustering Optimization
-* Evaluated both Hierarchical and **Partitioning Around Medoids (PAM)** algorithms[cite: 1].
-* Optimized the cluster size at $k = 4$, achieving a **0.65 Silhouette Score**, ensuring distinct, highly interpretable student behavioral profiles[cite: 1].
+* Evaluated both Hierarchical and **Partitioning Around Medoids (PAM)** algorithms.
+* Optimized the cluster size at $k = 4$, achieving a **0.65 Silhouette Score**, ensuring distinct, highly interpretable student behavioral profiles.
 
 ### 3. Production Pipeline
 [Qualtrics Raw Data] ➡️ [SQLite Database] ➡️ [PAM Clustering Model] ➡️ [FastAPI Backend] ➡️ [Streamlit Live UI]
 
 * Wrapped the final trained PAM model in a lightweight **FastAPI** application[cite: 1].
-* Deployed the API to **Render** to serve real-time predictions based on new user survey inputs via a custom-built **Streamlit** dashboard[cite: 1].
+* Deployed the API to **Render** to serve real-time predictions based on new user survey inputs via a custom-built **Streamlit** dashboard.
 
 ---
 
