@@ -113,7 +113,7 @@ if uploaded_file is not None:
                     student_ids = df_final['student_id'].tolist()
                     student_select = st.selectbox("Select a student", options = student_ids)
                     variable_select_one = st.selectbox("Select a variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
-                    variable_select_two = st.selectbox("Select a variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
+                    variable_select_two = st.selectbox("Select another variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
 
                     if student_select is not None and variable_select_one is not None and variable_select_two:
                         
