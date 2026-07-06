@@ -10,6 +10,12 @@ import gower
 
 app = FastAPI(title = "PAM Clustering API") # Name of the API
 
+allowed_origin = [
+    "http://localhost:8501",
+    "https://localhost:8502"
+    "https://diegofonde-schmid-analysis-app-owcntx.streamlit.app"
+]
+
 # Allows for frontend and backend to communicate even with different ports
 app.add_middleware(
     CORSMiddleware,
@@ -39,6 +45,10 @@ class StudentDataset(BaseModel):
 @app.get("/") # Status returned when connected to the homepage
 def home(): 
     return {"status": "API is online"}
+
+@app.post("/medoids")
+def extract_medoid_feature():
+    return {"Medoid_Features": medoid_profiles}
 
 @app.post("/predict") # When data is inputted by the user
 def predict_group(dataset: StudentDataset):
@@ -81,7 +91,7 @@ def predict_group(dataset: StudentDataset):
 
     is_category = [True, True, False, False]
 
-    gower_matrix = gower.gower_matrix(input_df_gower,  medoid_matrix_ordered, cat_features= is_category) # Measures the distance of every row from the medoid
+    gower_matrix = gower.gower_matrix(input_df_gower,  medoid_matrix_ordered, cat_features = is_category) # Measures the distance of every row from the medoid
 
     assigned_indices = np.argmin(gower_matrix, axis = 1) # Returns 1D np array of the metroid the row is closest to
 
