@@ -48,7 +48,8 @@ def home():
 
 @app.post("/medoids")
 def extract_medoid_feature():
-    return {"Medoid_Features": medoid_profiles}
+    medoid_list = medoid_profiles.to_dict(orient = "records")
+    return {"Medoid_Features": medoid_list}
 
 @app.post("/predict") # When data is inputted by the user
 def predict_group(dataset: StudentDataset):
