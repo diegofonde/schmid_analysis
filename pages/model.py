@@ -8,7 +8,8 @@ import plotly.graph_objects as go
 st.title("PAM Clustering Model")
 st.markdown("Here is the page dedicated to clustering students based on the inputted dataset!")
 
-API_URL =  "https://schmid-student-segmentation-api.onrender.com/predict" # API URL for API being hosted in Render
+API_URL_PREDICT =  "https://schmid-student-segmentation-api.onrender.com/predict" # API URL for API prediction hosted in Render
+API_URL_MEDOIDS =  "https://schmid-student-segmentation-api.onrender.com/medoids" # API URL for API medoids hosted in Render
 
 st.subheader("📂 Upload your dataset here: ")
 uploaded_file = st.file_uploader("Upload a CSV file", type = ["csv"])
@@ -74,7 +75,7 @@ if uploaded_file is not None:
                 with st.spinner("Calculating..."):
 
                     try:
-                        response = requests.post(API_URL, json = payload)
+                        response = requests.post(API_URL_PREDICT, json = payload)
 
                         if response.status_code == 200:
 
@@ -112,12 +113,26 @@ if uploaded_file is not None:
                     # Dropdowns for filtering between studeets and variables
                     student_ids = df_final['student_id'].tolist()
                     student_select = st.selectbox("Select a student", options = student_ids)
-                    variable_select_one = st.selectbox("Select a variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
-                    variable_select_two = st.selectbox("Select another variable", options = ['commuting_group', 'work_group', 'credits_bin', 'labs'])
 
-                    if student_select is not None and variable_select_one is not None and variable_select_two:
+                    if student_select is not None:
+
+                        try:
+                            response = requests.posts(API_URL_MEDOIDS, json = payload)
+
+                            if response.status_code == 200:
+
+                                # Putting medoid features in dataset 
+                                predictions = response.json()["Medoid_Features"]
+                                medoid_df = pd.DataFrame(predictions)
+
+                            else:
+                                st.error(f"API Error: Received status code {response.status_code}")
+                        except requests.exceptions.RequestException as e:
+                            st.error(f"Connection failed: Received status code {requests.status_code}")
                         
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
+
+                        # fig = px.parallel_categories
 
                         # category_distributions = df_final.groupby(['Predicted_Group_Name', variable_select]).size().unstack(fill_value=0)
                         # category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
