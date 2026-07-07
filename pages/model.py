@@ -124,6 +124,7 @@ if uploaded_file is not None:
                                 # Putting medoid features in dataset 
                                 predictions = response.json()["Medoid_Features"]
                                 medoid_df = pd.DataFrame(predictions)
+                                st.dataframe(medoid_df.head())
 
                             else:
                                 st.error(f"API Error: Received status code {response.status_code}")
