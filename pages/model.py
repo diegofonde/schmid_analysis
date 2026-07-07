@@ -117,7 +117,8 @@ if uploaded_file is not None:
                     if student_select is not None:
 
                         try:
-                            response = requests.posts(API_URL_MEDOIDS, json = payload)
+
+                            response = requests.post(API_URL_MEDOIDS, json = payload)
 
                             if response.status_code == 200:
 
