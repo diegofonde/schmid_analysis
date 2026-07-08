@@ -31,6 +31,15 @@ with st.expander("🧠 Deep Dive: How does the PAM Clustering Model work?"):
     * **Robust Mixed-Data Handling:** Utilizing Gower distance ensures that categorical grouping labels hold appropriate mathematical weight alongside numerical features.
     * **High Robustness to Noise:** PAM uses actual medoids, making it significantly less sensitive to outliers or anomalous student schedules than K-Means.
     * **True Interpretability:** Every cluster profile is anchored to a real-world scheduling pattern, ensuring our student personas represent genuine behaviors rather than abstract mathematical fractions.
+    
+    #### 3. ### Model Selection & Performance
+    To determine the optimal segmentation framework, the **PAM (Partitioning Around Medoids)** model's performance was benchmarked against an **Agglomerative Hierarchical Clustering** algorithm. 
+
+    While both models achieved an identical, robust **Silhouette Score of 0.65 at k = 4**, the PAM model was selected for production based on two critical advantages:
+
+    * **Superior Interpretability & Exemplar Profiles:** Because PAM anchors its clusters around a *medoid* (a real student profile existing within the dataset) rather than an abstract mathematical average, the resulting segments are highly interpretable. Stakeholders can look at a tangible, real-world example to immediately understand the behavioral boundaries of the entire cluster.
+    * **Computational Efficiency:** The PAM algorithm demonstrates significantly faster execution times and lower memory overhead during training compared to the $O(N^2)$ time complexity of Hierarchical Clustering. This ensures the pipeline remains scalable as more student data is collected.
+    
     """)
 
 st.subheader("🎯 Student Persona Breakdown")
