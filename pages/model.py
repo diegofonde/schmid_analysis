@@ -43,7 +43,7 @@ with st.expander("🧠 Deep Dive: How does the PAM Clustering Model work?"):
     """)
 
 st.subheader("🎯 Student Persona Breakdown")
-st.write("The PAM mode has 4 designated clusters: **On-Campus Hustlers, **Commuting Overdrivers, **Commuting Academics and **On-Campus Residents. Click through the tabs below to understand the behavioral traits defining each cluster: ")
+st.write("The PAM mode has 4 designated clusters: **On-Campus Hustlers**, **Commuting Overdrivers**, **Commuting Academics** and **On-Campus Residents**. Click through the tabs below to understand the behavioral traits defining each cluster: ")
 
 tab1, tab2, tab3, tab4 = st.tabs([
     "🏃‍♂️ On-Campus Hustlers", 
