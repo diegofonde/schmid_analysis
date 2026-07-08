@@ -115,42 +115,24 @@ if uploaded_file is not None:
                     student_select = st.selectbox("Select a student", options = student_ids)
 
                     if student_select is not None:
-
-                        try:
-
-                            response = requests.post(API_URL_MEDOIDS, json = payload)
-
-                            if response.status_code == 200:
-
-                                # Putting medoid features in dataset 
-                                predictions = response.json()["Medoid_Features"]
-                                medoid_df = pd.DataFrame(predictions)
-                                st.dataframe(medoid_df['group_name'].head())
-
-                            else:
-                                st.error(f"API Error: Received status code {response.status_code}")
-                        except requests.exceptions.RequestException as e:
-                            st.error(f"Connection failed: Received status code {requests.status_code}")
                         
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
+                        feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs']
 
-                        # fig = px.parallel_categories
+                        fig = px.parallel_categories(
+                            df_final,
+                            dimensions = feature_variables,
+                            color = "group_name",
+                            title = "Students by Cluster",
+                            labels = {
+                                "commuting_group": "Commute Status",
+                                "work_group": "Working Status",
+                                "credits_bin": "Credits Taken",
+                                "labs": "Labs taken"
+                            }    
+                        )
 
-                        # category_distributions = df_final.groupby(['Predicted_Group_Name', variable_select]).size().unstack(fill_value=0)
-                        # category_distributions_pct = category_distributions.div(category_distributions.sum(axis=1), axis=0).reset_index()
-                        # category_distributions_melted = category_distributions_pct.melt(id_vars='Predicted_Group_Name', value_name='Percentage')
-
-                        # fig = px.bar(
-                        #     category_distributions_melted,
-                        #     x = "Predicted_Group_Name",
-                        #     y = "Percentage",
-                        #     color = variable_select,
-                        #     barmode = 'group',
-                        #     title = f"Categorical Proportions of {variable_select} Across Clusters",
-                        #     labels = {'Percentage': 'Proportion of Cluster Population'}
-                        # )
-
-                        # st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width = True)
 
                     csv_output = df_final.to_csv(index = False).encode('utf-8')
                     st.download_button(
