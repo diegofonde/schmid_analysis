@@ -61,7 +61,7 @@ if uploaded_file is not None:
         st.success("Data has been cleaned")
 
     if st.session_state.cleaned_df is not None:
-            st.write("Data Preview: ")
+            st.write("Cleaned data Preview: ")
             st.dataframe(st.session_state.cleaned_df.head())
 
             if st.button("Run clustering algorithm"):
@@ -105,6 +105,8 @@ if uploaded_file is not None:
             if "df_clustered_results" in st.session_state:
 
                     df_final = st.session_state["df_clustered_results"]
+
+                    st.dataframe(df_final.head())
 
                     st.write("----")
                     st.subheader("🔍 Individual Student Cluster Breakdown")
