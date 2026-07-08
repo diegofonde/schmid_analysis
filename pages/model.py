@@ -106,8 +106,6 @@ if uploaded_file is not None:
 
                     df_final = st.session_state["df_clustered_results"]
 
-                    st.dataframe(df_final.head())
-
                     st.write("----")
                     st.subheader("🔍 Individual Student Cluster Breakdown")
                     st.markdown("Select a student and a metric to visualize exactly why they were assigned to their specific cluster.")
@@ -136,6 +134,8 @@ if uploaded_file is not None:
                         )
 
                         fig.update_layout(
+                            height = 650,
+                            margin = dict(l = 140, r = 140, t = 100, b = 80),
                             coloraxis_colorbar = dict (
                                 title = "Group Name",
                                 tickvals = [0, 1, 2, 3], # Corresponding number per group name
