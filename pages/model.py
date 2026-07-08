@@ -104,51 +104,61 @@ if uploaded_file is not None:
                 
             if "df_clustered_results" in st.session_state:
 
-                    df_final = st.session_state["df_clustered_results"]
-
                     st.write("----")
                     st.subheader("🔍 Individual Student Cluster Breakdown")
                     st.markdown("Select a student and a metric to visualize exactly why they were assigned to their specific cluster.")
 
-                    # Dropdowns for filtering between studeets and variables
-                    student_ids = df_final['student_id'].tolist()
-                    student_select = st.selectbox("Select a student", options = student_ids)
+                    df_final = st.session_state["df_clustered_results"]
 
-                    if student_select is not None:
-                        
-                        student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
-                        feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs', 'student_id']
+                    # Allow user to visualize every 50 clustered student
+                    batch_size = 50
+                    total_students = len(df_final)
 
-                        cluster_colors = ["#DC2626", "#2563EB", "#10B981", "#F59E0B"]
+                    page_options = []
+                    for i in range(0, total_students, batch_size):
+                        end_range = min(i + batch_size, total_students)
+                        page_options.append(end_range)
 
-                        fig = px.parallel_categories (
-                            df_final,
-                            dimensions = feature_variables,
-                            color = "Predicted_Group",
-                            color_continuous_scale = cluster_colors,
-                            title = "Students by Cluster",
-                            labels = {
-                                "commuting_group": "Commute Status",
-                                "work_group": "Working Status",
-                                "credits_bin": "Credits Taken",
-                                "labs": "Labs taken",
-                                "student_data": "ID"
-                            }
+                    selected_batch = st.selectbox("Selecting batch to be displayed: ", page_options)
+
+                    current_page_idx = page_options.index(selected_batch)
+                    start_idx = current_page_idx * batch_size
+                    end_idx = min(start_idx + batch_size, total_students)
+
+                    df_batch = df_final[start_idx: end_idx]
+
+                    feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs', 'student_id']
+
+                    cluster_colors = ["#DC2626", "#2563EB", "#10B981", "#F59E0B"]
+
+                    fig = px.parallel_categories (
+                        df_batch,
+                        dimensions = feature_variables,
+                        color = "Predicted_Group",
+                        color_continuous_scale = cluster_colors,
+                        title = "Students by Cluster",
+                        labels = {
+                            "commuting_group": "Commute Status",
+                            "work_group": "Working Status",
+                            "credits_bin": "Credits Taken",
+                            "labs": "Labs taken",
+                            "student_data": "ID"
+                        }
+                    )
+
+                    fig.update_layout(
+                        height = 650,
+                        margin = dict(l = 140, r = 140, t = 100, b = 80),
+                        coloraxis_colorbar = dict (
+                            title = "Group Name",
+                            tickvals = [0, 1, 2, 3], # Corresponding number per group name
+                            ticktext = ["On-Campus Hustlers", "Commuting Overdrivers", "Commuting Academics", "On-Campus Residents"],
+                            lenmode = "pixels",
+                            len = 250
                         )
+                    )
 
-                        fig.update_layout(
-                            height = 650,
-                            margin = dict(l = 140, r = 140, t = 100, b = 80),
-                            coloraxis_colorbar = dict (
-                                title = "Group Name",
-                                tickvals = [0, 1, 2, 3], # Corresponding number per group name
-                                ticktext = ["On-Campus Hustlers", "Commuting Overdrivers", "Commuting Academics", "On-Campus Residents"],
-                                lenmode = "pixels",
-                                len = 250
-                            )
-                        )
-
-                        st.plotly_chart(fig, use_container_width = True)
+                    st.plotly_chart(fig, use_container_width = True)
 
                     csv_output = df_final.to_csv(index = False).encode('utf-8')
                     st.download_button(
