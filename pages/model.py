@@ -121,17 +121,28 @@ if uploaded_file is not None:
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
                         feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs']
 
-                        fig = px.parallel_categories(
+                        fig = px.parallel_categories (
                             df_final,
                             dimensions = feature_variables,
-                            color = "Predicted_Group_Name",
+                            color = "Predicted_Group",
+                            color_continuous_scale = px.colors.sequential.Viridis,
                             title = "Students by Cluster",
                             labels = {
                                 "commuting_group": "Commute Status",
                                 "work_group": "Working Status",
                                 "credits_bin": "Credits Taken",
                                 "labs": "Labs taken"
-                            }    
+                            }
+                        )
+
+                        fig.update_layout(
+                            coloraxis_colorbar = dict (
+                                title = "Group Name",
+                                tickvals = [0, 1, 2, 3], # Corresponding number per group name
+                                ticktext = ["On-Campus Hustlers", "Commuting Overdrivers", "Commuting Academics", "On-Campus Residents"],
+                                lenmode = "pixels",
+                                len = 250
+                            )
                         )
 
                         st.plotly_chart(fig, use_container_width = True)
