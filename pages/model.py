@@ -119,11 +119,13 @@ if uploaded_file is not None:
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
                         feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs']
 
+                        bg_colors = ["rgba(220, 38, 36, 0.2)", "rgba(37, 99, 235, 0.2)", "rgba(16, 185, 129, 0.2)", "rgba(245, 158, 11, 0.2)"] # This lets the line become more transparent so that highlighted student is more visible
+
                         fig = px.parallel_categories (
                             df_final,
                             dimensions = feature_variables,
                             color = "Predicted_Group",
-                            color_continuous_scale = px.colors.sequential.Viridis,
+                            color_continuous_scale = bg_colors,
                             title = "Students by Cluster",
                             labels = {
                                 "commuting_group": "Commute Status",
@@ -132,6 +134,22 @@ if uploaded_file is not None:
                                 "labs": "Labs taken"
                             }
                         )
+
+                        fig.add_trace( # Shows the information of the student line being highlighted based on the students id
+                            go.Parcats(
+                                dimensions =[
+                                    {"label": "Commute Status", "values": [student_row['commuting_group']]},
+                                    {"label": "Working Status", "values": [student_row['work_group']]},
+                                    {"label": "Credits Taken", "values": [student_row['credits_bin']]},
+                                    {"label": "Labs taken", "values": [student_row['labs']]}
+                                ],
+                                line = {
+                                    "color": "#000000", # Strong black line highlighting their path
+                                    "width": 6, # Extra thick path
+                                },
+                                name = f"Student {student_select}"
+                            )
+                        ) 
 
                         fig.update_layout(
                             height = 650,
