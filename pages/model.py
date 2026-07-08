@@ -14,13 +14,23 @@ working status, number of credits enrolled, and labs enrolled.
 
 with st.expander("🧠 Deep Dive: How does the PAM Clustering Model work?"):
     st.markdown("""
-    ### Partitioning Around Medoids (PAM)
-    Unlike traditional K-Means clustering—which calculates artificial 'centroids' (mathematical averages) to group data—the **PAM algorithm** selects **actual, real student profiles** from our dataset to act as the centerpoints (**medoids**) for each cluster. 
+    ### Partitioning Around Medoids (PAM) with Gower Distance
+    Our student dataset contains a **mixed data structure** featuring ordinal variables (e.g., credits, labs) alongside numerical metrics (e.g., commuting status, working staus). Because standard distance metrics (like Euclidean distance) cannot mathematically process mixed data types well, our model employs a two-stage pipeline: 
     
-    **Why this matters for our analysis:**
-    * **High Robustness:** PAM uses Manhattan distance metrics, making it significantly more robust to outliers and anomalous student schedules than K-Means.
+    #### 1. Gower Distance Matrix Transformation
+    Before clustering, the data passes through a **Gower Distance** algorithm. Gower calculates a feature-specific dissimilarity score between 0 and 1 for every pair of students:
+    * **For Categorical Data:** It applies binary matching (0 if they share the same status, 1 if they do not).
+    * **For Ordinal/Numerical Data:** It calculates the absolute difference divided by the total range of that feature.
+    
+    The result is a comprehensive similarity matrix that standardizes every student's unique combination of lifestyle factors.
+    
+    #### 2. Partitioning Around Medoids (PAM)
+    Once the Gower matrix is built, the **PAM algorithm** selects **actual, real student profiles** from our dataset to act as the centerpoints (**medoids**) for each cluster, rather than calculating artificial 'centroids' (mathematical averages) like traditional K-Means. 
+    
+    **Why this pipeline matters for our analysis:**
+    * **Robust Mixed-Data Handling:** Utilizing Gower distance ensures that categorical grouping labels hold appropriate mathematical weight alongside numerical features.
+    * **High Robustness to Noise:** PAM uses actual medoids, making it significantly less sensitive to outliers or anomalous student schedules than K-Means.
     * **True Interpretability:** Every cluster profile is anchored to a real-world scheduling pattern, ensuring our student personas represent genuine behaviors rather than abstract mathematical fractions.
-    * **Categorical Handling:** It perfectly processes partitioned behavioral variables like commute statuses, lab choices, and credit boundaries.
     """)
 
 st.subheader("🎯 Student Persona Breakdown")
