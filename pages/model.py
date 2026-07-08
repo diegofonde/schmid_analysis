@@ -5,7 +5,7 @@ import requests
 import plotly.express as px
 import plotly.graph_objects as go
 
-st.title("📊 PAM Clustering Model")
+st.title("📲 PAM Clustering Model")
 st.markdown("""
 Welcome to the student segmentation engine! This page leverages unsupervised machine learning 
 to partition our student dataset into distinct, behavioral profiles based on their commuting status,
@@ -71,7 +71,7 @@ with tab2:
 with tab3:
     st.markdown("""
     **Core Characteristics:**
-    * **Housing:** Off-campus commuters traveling distances ranging from over 15 minutes to an hour..
+    * **Housing:** Off-campus commuters traveling distances ranging from over 15 minutes to an hour
     * **Academic Load:** Taking low to medium using count, takes 12-15 credits.
     * **Employment:** Is not exmployed.
     """)
