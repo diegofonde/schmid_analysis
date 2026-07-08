@@ -117,7 +117,7 @@ if uploaded_file is not None:
                     if student_select is not None:
                         
                         student_row = df_final[df_final['student_id'] == student_select].iloc[0] # Grabs the first student row that has that corresponding id
-                        feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs']
+                        feature_variables = ['commuting_group', 'work_group', 'credits_bin', 'labs', 'student_id']
 
                         cluster_colors = ["#DC2626", "#2563EB", "#10B981", "#F59E0B"]
 
@@ -127,12 +127,12 @@ if uploaded_file is not None:
                             color = "Predicted_Group",
                             color_continuous_scale = cluster_colors,
                             title = "Students by Cluster",
-                            hover_data = ["student_id"],
                             labels = {
                                 "commuting_group": "Commute Status",
                                 "work_group": "Working Status",
                                 "credits_bin": "Credits Taken",
-                                "labs": "Labs taken"
+                                "labs": "Labs taken",
+                                "student_data": "ID"
                             }
                         )
 
