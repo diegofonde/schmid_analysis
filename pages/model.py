@@ -124,7 +124,7 @@ if uploaded_file is not None:
                         fig = px.parallel_categories(
                             df_final,
                             dimensions = feature_variables,
-                            color = "group_name",
+                            color = "Predicted_Group_Name",
                             title = "Students by Cluster",
                             labels = {
                                 "commuting_group": "Commute Status",
