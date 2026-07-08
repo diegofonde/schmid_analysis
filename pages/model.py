@@ -143,10 +143,10 @@ if uploaded_file is not None:
                                     {"label": "Credits Taken", "values": [student_row['credits_bin']]},
                                     {"label": "Labs taken", "values": [student_row['labs']]}
                                 ],
-                                line = {
-                                    "color": "#000000", # Strong black line highlighting their path
-                                    "width": 6, # Extra thick path
-                                },
+                                # line = {
+                                #     "color": "#000000", # Strong black line highlighting their path
+                                #     "width": 6, # Extra thick path
+                                # },
                                 name = f"Student {student_select}"
                             )
                         ) 
