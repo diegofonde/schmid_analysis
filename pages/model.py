@@ -111,7 +111,7 @@ if uploaded_file is not None:
                     df_final = st.session_state["df_clustered_results"]
 
                     # Allow user to visualize every 50 clustered student
-                    batch_size = 50
+                    batch_size = 30
                     total_students = len(df_final)
 
                     page_options = []
