@@ -12,6 +12,17 @@ to partition our student dataset into distinct, behavioral profiles based on the
 working status, number of credits enrolled, and labs enrolled.
 """)
 
+with st.expander("🧠 Deep Dive: How does the PAM Clustering Model work?"):
+    st.markdown("""
+    ### Partitioning Around Medoids (PAM)
+    Unlike traditional K-Means clustering—which calculates artificial 'centroids' (mathematical averages) to group data—the **PAM algorithm** selects **actual, real student profiles** from our dataset to act as the centerpoints (**medoids**) for each cluster. 
+    
+    **Why this matters for our analysis:**
+    * **High Robustness:** PAM uses Manhattan distance metrics, making it significantly more robust to outliers and anomalous student schedules than K-Means.
+    * **True Interpretability:** Every cluster profile is anchored to a real-world scheduling pattern, ensuring our student personas represent genuine behaviors rather than abstract mathematical fractions.
+    * **Categorical Handling:** It perfectly processes partitioned behavioral variables like commute statuses, lab choices, and credit boundaries.
+    """)
+
 st.subheader("🎯 Student Persona Breakdown")
 st.write("Click through the tabs below to understand the behavioral traits defining each cluster: ")
 
