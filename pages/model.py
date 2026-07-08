@@ -5,8 +5,54 @@ import requests
 import plotly.express as px
 import plotly.graph_objects as go
 
-st.title("PAM Clustering Model")
-st.markdown("Here is the page dedicated to clustering students based on the inputted dataset!")
+st.title("📊 PAM Clustering Model")
+st.markdown("""
+Welcome to the student segmentation engine! This page leverages unsupervised machine learning 
+to partition our student dataset into distinct, behavioral profiles based on their commuting status,
+working status, number of credits enrolled, and labs enrolled.
+""")
+
+st.subheader("🎯 Student Persona Breakdown")
+st.write("Click through the tabs below to understand the behavioral traits defining each cluster: ")
+
+tab1, tab2, tab3, tab4 = st.tabs([
+    "🏃‍♂️ On-Campus Hustlers", 
+    "🚗 Commuting Overdrivers", 
+    "📚 Commuting Academics", 
+    "🏠 On-Campus Residents"
+])
+
+with tab1:
+    st.markdown("""
+    **Core Characteristics:**
+    * **Housing:** Live close to or on campus, 0- 15mins commute.
+    * **Academic Load:** High unit count, takes 16-18 credits.
+    * **Employment:** Is employed with work hours ranging from 1-40 hours.
+    """)
+
+with tab2:
+    st.markdown("""
+    **Core Characteristics:**
+    * **Housing:** Off-campus commuters traveling distances ranging from over 15 minutes to an hour.
+    * **Academic Load:** High unit count, takes 16-18 credits.
+    * **Employment:** Is employed with work hours ranging from 1-40 hours.
+    """)
+
+with tab3:
+    st.markdown("""
+    **Core Characteristics:**
+    * **Housing:** Off-campus commuters traveling distances ranging from over 15 minutes to an hour..
+    * **Academic Load:** Taking low to medium using count, takes 12-15 credits.
+    * **Employment:** Is not exmployed.
+    """)
+
+with tab4:
+    st.markdown("""
+    **Core Characteristics:**
+    * **Housing:** Live close to or on campus, 0- 15mins commute.
+    * **Academic Load:** Taking low to medium using count, takes 12-15 credits.
+    * **Employment:** Is not exmployed.
+    """)
 
 API_URL_PREDICT =  "https://schmid-student-segmentation-api.onrender.com/predict" # API URL for API prediction hosted in Render
 API_URL_MEDOIDS =  "https://schmid-student-segmentation-api.onrender.com/medoids" # API URL for API medoids hosted in Render
