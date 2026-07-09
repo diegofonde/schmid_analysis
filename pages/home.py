@@ -76,7 +76,7 @@ elif commits:
                 st.markdown(f"#####{clean_message}")
                 st.markdown(f"🛠️ **Developer:** {author_name}")
             st.write("")
-            st.markdown("<hr style='margin: 0px 0px 15px 0px; opacity: 0.25;'>", unsafe_with_html = True) # Diviver
+            st.markdown("<hr style='margin: 0px 0px 15px 0px; opacity: 0.25;'>", unsafe_allow_html = True) # Diviver
 else:
     st.caption("Unable to load the live commit feed at this time. Repository may be private or offline.")
 
