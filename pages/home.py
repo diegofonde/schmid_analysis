@@ -58,12 +58,12 @@ elif commits:
     for commit in commits: # For loop used to get every individual commit message
         commit_info = commit['commit']
         author_name = commit_info['author']['name']
-        date = commit_info['author']['date']
+        date_info = commit_info['author']['date']
         message = commit_info['message']
         
         clean_message = message.split('\n')[0]
 
-        cleaned_date = date.strptime(date, "%Y-%m-%dT%H:%M:%SZ").strftime("%b %d, %Y • %I:%M %p")
+        cleaned_date = datetime.strptime(date_info, "%Y-%m-%dT%H:%M:%SZ").strftime("%b %d, %Y • %I:%M %p")
 
         with st.container():
             col1, col2 = st.columns([1, 3])
