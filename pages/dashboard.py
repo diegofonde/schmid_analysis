@@ -1,8 +1,19 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.title("Interactive Tableau Dashboard")
-st.markdown("This page is dedicated to interacting with the dedicated Tableau Dashboards showcasing important details from the Qualtrics survey response")
+st.title("Interactive Tableau Dashboard 📊")
+
+st.markdown("""
+Welcome to the data visualization hub! This page features an interactive Tableau dashboard hosted on Tableau Public, 
+designed to bring our Qualtrics survey responses to life. 
+
+**Dashboards you can explore here:**
+* 👤 **Student Profile:** Understand key demographics of students who responded to the survey.
+* 📈 **Resource Analysis:** Deep dive analysis into resource use and student resource preference.
+* 🤝 **Schmid Environment & Sense of Belonging:** Discover how Schmid students feel about the college based on major.
+
+*Click on the filters on the side to filter dynamically, and explore the insights at your own pace.*
+""")
 
 tableau_url = "https://public.tableau.com/app/profile/diego.gabriel.fondevilla/viz/Schmid_Survey/StudentProfile?publish=yes"
 tableau_embedded_code = """
