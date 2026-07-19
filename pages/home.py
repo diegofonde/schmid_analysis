@@ -41,7 +41,7 @@ Orginally my role as a Student Assistant started off simple data cleaning and an
             
 This webapp is still a WIP, and developments are ongoing.
 
-_All features are created by Diego Fondevilla under Kate Hill's supervision :))
+All features are created by Diego Fondevilla under Kate Hill's supervision :))
 """)
 
 st.write("---")
@@ -70,10 +70,10 @@ elif commits:
 
             with col1:
                 st.markdown(f"**📅{cleaned_date.split(' • ')[0]}**")
-                st.caption(f"**🕒{cleaned_date.split(' • ')[1]}")
+                st.caption(f"**🕒{cleaned_date.split(' • ')[1]}**")
 
             with col2:
-                st.markdown(f"#####{clean_message}")
+                st.markdown(f"##### {clean_message}")
                 st.markdown(f"🛠️ **Developer:** {author_name}")
             st.write("")
             st.markdown("<hr style='margin: 0px 0px 15px 0px; opacity: 0.25;'>", unsafe_allow_html = True) # Diviver
