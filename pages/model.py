@@ -32,7 +32,7 @@ with st.expander("🧠 Deep Dive: How does the PAM Clustering Model work?"):
     * **High Robustness to Noise:** PAM uses actual medoids, making it significantly less sensitive to outliers or anomalous student schedules than K-Means.
     * **True Interpretability:** Every cluster profile is anchored to a real-world scheduling pattern, ensuring our student personas represent genuine behaviors rather than abstract mathematical fractions.
     
-    #### 3. ### Model Selection & Performance
+    #### 3. Model Selection & Performance
     To determine the optimal segmentation framework, the **PAM (Partitioning Around Medoids)** model's performance was benchmarked against an **Agglomerative Hierarchical Clustering** algorithm. 
 
     While both models achieved an identical, robust **Silhouette Score of 0.65 at k = 4**, the PAM model was selected for production based on two critical advantages:
@@ -55,7 +55,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.markdown("""
     **Core Characteristics:**
-    * **Housing:** Live close to or on campus, 0- 15mins commute.
+    * **Housing:** Live close to or on campus, 0-15mins commute.
     * **Academic Load:** High unit count, takes 16-18 credits.
     * **Employment:** Is employed with work hours ranging from 1-40 hours.
     """)
@@ -79,7 +79,7 @@ with tab3:
 with tab4:
     st.markdown("""
     **Core Characteristics:**
-    * **Housing:** Live close to or on campus, 0- 15mins commute.
+    * **Housing:** Live close to or on campus, 0-15mins commute.
     * **Academic Load:** Taking low to medium using count, takes 12-15 credits.
     * **Employment:** Is not exmployed.
     """)
