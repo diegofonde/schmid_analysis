@@ -12,3 +12,5 @@ This system uses **SQLite** to efficiently store, structure, and manage survey r
 * **Scalability:** Easily ingest and organize future survey runs within a unified schema.
 * **Tableau Ready:** Automatically format and standardize dynamic survey responses for seamless visualization and reporting.
 """)
+
+st.subheader("🔀 Database Schema")
