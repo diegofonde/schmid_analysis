@@ -14,3 +14,4 @@ This system uses **SQLite** to efficiently store, structure, and manage survey r
 """)
 
 st.subheader("🔀 Database Schema")
+st.pdf()
