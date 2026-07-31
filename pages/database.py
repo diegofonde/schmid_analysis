@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Gaining access to the documents folder
 ROOT = Path(__file__).parents[1]
-schema_pdf_path = ROOT/"files"/"PDF"/"Scmid Survey.pdf"
+schema_pdf_path = ROOT/"files"/"PDF"/"Schmid Survey.pdf"
 
 st.title("Database page 💾")
 
