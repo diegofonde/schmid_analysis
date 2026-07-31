@@ -1,4 +1,5 @@
 import streamlit as st
+import tempfile
 import pandas as pd
 import sqlite3
 from pathlib import Path
@@ -35,4 +36,19 @@ st.subheader("📂 Upload your SQLite file here: ")
 uploaded_file = st.file_uploader("Upload SQLite file", type = ["db", "sqlite", "sqlite3"])
 
 if uploaded_file is not None:
-    st.write("Hurray")
+    with tempfile.NamedTemporaryFile(delete = False, suffix = ".db") as tmp_file:
+        tmp_file.write(uploaded_file.getvalue())
+        temp_db_path = tmp_file.name
+
+    conn = sqlite3.connect(temp_db_path)
+
+    try:
+        query = '''
+        SELECT *
+        FROM clusters
+        '''
+        clusters_df = pd.read_sql_query(query, conn)
+
+        st.dataframe(clusters_df)
+    finally: 
+        conn.close()
