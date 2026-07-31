@@ -1,0 +1,18 @@
+# Database & Secrets
+database/
+*.db
+.env
+
+# Streamlit Local Secrets
+.streamlit/secrets.toml
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# ML Models
+models/*.h5
+models/*.keras
+
+# OS Files
+.DS_Store

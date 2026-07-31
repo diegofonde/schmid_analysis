@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
-import base64
+import sqlite3
 from pathlib import Path
+
+# Connecting to SQLite database
 
 # Gaining access to the documents folder
 ROOT = Path(__file__).parents[1]
