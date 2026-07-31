@@ -19,7 +19,7 @@ allowed_origin = [
 # Allows for frontend and backend to communicate even with different ports
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=allowed_origin, 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
