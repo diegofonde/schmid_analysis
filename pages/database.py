@@ -2,6 +2,7 @@ import streamlit as st
 import tempfile
 import pandas as pd
 import sqlite3
+import db_helpers as db
 from pathlib import Path
 
 # Gaining access to the documents folder
@@ -36,11 +37,8 @@ st.subheader("📂 Upload your SQLite file here: ")
 uploaded_file = st.file_uploader("Upload SQLite file", type = ["db", "sqlite", "sqlite3"])
 
 if uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete = False, suffix = ".db") as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        temp_db_path = tmp_file.name
 
-    conn = sqlite3.connect(temp_db_path)
+    conn = db.get_connection(uploaded_file)
 
     try:
         query = '''
