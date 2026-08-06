@@ -3,6 +3,10 @@ database/
 *.db
 .env
 
+# Streamlit Local Secrets & Config
+.streamlit/*
+!.streamlit/config.toml
+
 # Streamlit Local Secrets
 .streamlit/secrets.toml
 
