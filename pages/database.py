@@ -37,15 +37,4 @@ uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
 if uploaded_file is not None:
 
-    conn = db.get_connection(uploaded_file)
-
-    try:
-        query = '''
-        SELECT *
-        FROM clusters
-        '''
-        clusters_df = pd.read_sql_query(query, conn)
-
-        st.dataframe(clusters_df)
-    finally: 
-        conn.close()
+    conn = db.get_supabase_client()
