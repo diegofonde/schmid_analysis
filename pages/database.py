@@ -39,8 +39,5 @@ if uploaded_file is not None:
 
     conn = db.get_supabase_client()
 
-    try:
-        response = conn.table("answers").select("*").limit(1).execute()
-        st.success("Query successful")
-    except Exception as e:
-        st.error("Connection failed")
+    uploaded_data = pd.read_csv(uploaded_file)
+    cleaned_data = uploaded_data[1:]
