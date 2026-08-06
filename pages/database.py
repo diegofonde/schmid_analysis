@@ -32,6 +32,19 @@ if schema_png_path.is_file():
 else:
     st.error(f"Could not find PDF file at {schema_png_path}")
 
+st.title("Secrets Verification Test")
+
+try:
+    if "supabase" in st.secrets:
+        st.success("Found [supabase] section in secrets!")
+        st.write("URL target:", st.secrets["supabase"]["url"])
+    elif "connections" in st.secrets and "supabase" in st.secrets["connections"]:
+        st.success("Found [connections.supabase] section in secrets!")
+    else:
+        st.warning("Secrets file detected, but required Supabase keys were not found.")
+except Exception as e:
+    st.error(f"Could not load secrets. Error: {e}")
+
 # Let the user upload SQLite file
 st.subheader("📂 Upload your SQLite file here: ")
 uploaded_file = st.file_uploader("Upload SQLite file", type = ["db", "sqlite", "sqlite3"])
