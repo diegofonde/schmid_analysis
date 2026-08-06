@@ -34,17 +34,8 @@ else:
 
 st.title("Secrets Verification Test")
 
-try:
-    st.write("DEBUG - What Streamlit sees:", dict(st.secrets))
-    if "supabase" in st.secrets:
-        st.success("Found [supabase] section in secrets!")
-        st.write("URL target:", st.secrets["supabase"]["url"])
-    elif "connections" in st.secrets and "supabase" in st.secrets["connections"]:
-        st.success("Found [connections.supabase] section in secrets!")
-    else:
-        st.warning("Secrets file detected, but required Supabase keys were not found.")
-except Exception as e:
-    st.error(f"Could not load secrets. Error: {e}")
+if "supabase" in st.secrets:
+    st.success("Found [supabase] section in secrets!")
 
 # Let the user upload SQLite file
 st.subheader("📂 Upload your SQLite file here: ")
