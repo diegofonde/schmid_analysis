@@ -35,6 +35,7 @@ else:
 st.title("Secrets Verification Test")
 
 try:
+    st.write("DEBUG - What Streamlit sees:", dict(st.secrets))
     if "supabase" in st.secrets:
         st.success("Found [supabase] section in secrets!")
         st.write("URL target:", st.secrets["supabase"]["url"])
