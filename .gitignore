@@ -7,9 +7,6 @@ database/
 .streamlit/*
 !.streamlit/config.toml
 
-# Streamlit Local Secrets
-.streamlit/secrets.toml
-
 # Python Cache
 __pycache__/
 *.pyc
