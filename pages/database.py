@@ -1,9 +1,8 @@
 import streamlit as st
-import tempfile
 import pandas as pd
-import sqlite3
 import db_helpers as db
 from pathlib import Path
+from supabase import create_client, Client
 
 # Gaining access to the documents folder
 ROOT = Path(__file__).parents[1]
@@ -32,11 +31,9 @@ if schema_png_path.is_file():
 else:
     st.error(f"Could not find PDF file at {schema_png_path}")
 
-st.title("Secrets Verification Test")
-
-# Let the user upload SQLite file
-st.subheader("📂 Upload your SQLite file here: ")
-uploaded_file = st.file_uploader("Upload SQLite file", type = ["db", "sqlite", "sqlite3"])
+# Let the user upload csv file containing Qualtrics data
+st.subheader("📂 Upload your Qualtrics here: ")
+uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
 if uploaded_file is not None:
 
