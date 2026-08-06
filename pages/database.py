@@ -34,9 +34,6 @@ else:
 
 st.title("Secrets Verification Test")
 
-if "supabase" in st.secrets:
-    st.success("Found [supabase] section in secrets!")
-
 # Let the user upload SQLite file
 st.subheader("📂 Upload your SQLite file here: ")
 uploaded_file = st.file_uploader("Upload SQLite file", type = ["db", "sqlite", "sqlite3"])
