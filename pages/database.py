@@ -43,4 +43,6 @@ if uploaded_file is not None:
     survey_name = st.text_input("Enter the survey name: ")
     survey_date = st.date_input("Enter the date the survey was made: ")
 
-    survey_id = db.insert_survey_info(survey_name, survey_date)
+    if st.button("Submit"):
+        survey_id = db.insert_survey_info(conn, survey_name, survey_date)
+        st.write(survey_id)

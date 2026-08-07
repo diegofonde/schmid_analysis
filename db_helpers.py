@@ -18,7 +18,7 @@ def get_supabase_client() -> Client:
 def insert_survey_info(connection, survey_name, survey_date):
     new_survey = {
         "title": survey_name,
-        "date": survey_date
+        "date": str(survey_date)
     }
 
     response = connection.table("surveys").insert(new_survey).execute()
