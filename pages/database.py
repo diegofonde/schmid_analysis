@@ -4,6 +4,9 @@ import db_helpers as db
 from pathlib import Path
 from supabase import create_client, Client
 
+# Connecting to supabase
+conn = db.get_supabase_client()
+
 # Gaining access to the documents folder
 ROOT = Path(__file__).parents[1]
 schema_png_path = ROOT/"files"/"PNG"/"Schmid Survey (1).png"
@@ -37,7 +40,8 @@ uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
 if uploaded_file is not None:
 
-    conn = db.get_supabase_client()
+    survey_name = st.text_input("Enter the survey name: ")
+    survey_date = st.date_input("Enter the date the survey was made: ")
 
     uploaded_data = pd.read_csv(uploaded_file)
     cleaned_data = uploaded_data[1:]
