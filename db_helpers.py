@@ -23,7 +23,7 @@ def insert_survey_info(connection, survey_name, survey_date):
 
     response = connection.table("surveys").insert(new_survey).execute()
 
-    return response[0]["survey_id"]
+    return response.data[0]["survey_id"]
 
 
 
