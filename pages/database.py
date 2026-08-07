@@ -43,5 +43,4 @@ if uploaded_file is not None:
     survey_name = st.text_input("Enter the survey name: ")
     survey_date = st.date_input("Enter the date the survey was made: ")
 
-    uploaded_data = pd.read_csv(uploaded_file)
-    cleaned_data = uploaded_data[1:]
+    survey_id = db.insert_survey_info(survey_name, survey_date)
