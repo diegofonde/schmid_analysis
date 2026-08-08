@@ -8,9 +8,9 @@ st.title("Testing page")
 
 upload = st.file_uploader("Testing how to upload csv file into supbase")
 
-if st.button("Upload file"):
+if upload is not None: 
 
-    if upload is not None:
+    if st.button("Upload file"):
 
         upload_df = pd.read_csv(upload)
 
