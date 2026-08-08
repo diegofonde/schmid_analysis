@@ -35,18 +35,23 @@ else:
     st.error(f"Could not find PDF file at {schema_png_path}")
 
 # Let the user upload csv file containing Qualtrics data
-st.subheader("📂 Upload your Qualtrics here: ")
+st.subheader("📂 Upload your Qualtrics survey here: ")
 
-survey_name = st.text_input("Enter the survey name: ")
-survey_date = st.date_input("Enter the date the survey was made: ")
+uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
-if st.button("Enter survey details"):
+if uploaded_file is not None:
+    
+    survey_name = st.text_input("Enter the survey name: ")
+    survey_date = st.date_input("Enter the date the survey was made: ")
 
-    # Inserting details into the survey table
-    survey_id = db.insert_survey_info(conn, survey_name, survey_date)
-    st.success(f"Uploading information for {survey_id}")
+    if st.button("Enter survey details"):
 
-    uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
+        # Inserting details into the survey table
+        survey_id = db.insert_survey_info(conn, survey_name, survey_date)
+        st.success(f"Uploading information for {survey_id}")
 
-    if uploaded_file is not None:
-        st.write("Success")
+        responded_map = db.insert_respondant(conn, uploaded_file)
+        st.success(f"Uploaded {len(responded_map)} responders")
+
+        question_map = db.insert_question(conn, uploaded_file, survey_id)
+        st.success(f"Uploaded {len(question_map)} questions")
