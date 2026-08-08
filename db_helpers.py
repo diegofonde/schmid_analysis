@@ -52,6 +52,29 @@ def insert_respondant(connection, df):
 
     return respondent_map
 
+def insert_question(connection, df, survey_id):
+
+    df_questions = df.iloc[:, 15:]
+
+    # Obtaining the questions from the columns of the dataframe into a list
+    questions_list = df_questions.columns.tolist()
+
+    new_questions = [
+        {
+            "question_text": question_text,
+            "survey_id": survey_id
+        }
+        for question_text in questions_list
+    ]
+
+    response = connection.table("questions").insert(new_questions).execute()
+
+    question_map = {row["question_text"]: row["question_id"] for row in response.data}
+
+    return question_map
+
+
+
 
 
 
