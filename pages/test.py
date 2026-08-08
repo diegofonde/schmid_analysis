@@ -1,10 +1,19 @@
 import streamlit as st
+import pandas as pd
+import db_helpers as db
 
 conn = st.session_state.supabase
 
 st.title("Testing page")
 
-st.file_uploader("Testing how to upload csv file into supbase")
+upload = st.file_uploader("Testing how to upload csv file into supbase")
 
 if st.button("Upload file"):
-    print("yay")
+
+    if upload is not None:
+
+        upload_df = pd.read_csv(upload)
+
+        map = db.insert_respondant(conn, upload_df)
+
+        st.json(map)

@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import secrets
 from supabase import create_client, Client
 
 @st.cache_resource
@@ -15,6 +14,7 @@ def get_supabase_client() -> Client:
     key = st.secrets["supabase"]["key"]
     return create_client(url, key)
 
+# Function for inserting survey information into supabase
 def insert_survey_info(connection, survey_name, survey_date):
     new_survey = {
         "title": survey_name,
@@ -24,6 +24,30 @@ def insert_survey_info(connection, survey_name, survey_date):
     response = connection.table("surveys").insert(new_survey).execute()
 
     return response.data[0]["survey_id"]
+
+# Function for inserting the respondants into supabase
+def insert_respondant(connection, df):
+
+    # Obtain needed informataion from the dataframe
+    respondents_df = df[['Recipient Email', 'Recipient First Name', 'Recipient Last Name']].drop_duplicates()
+
+    respondents_df = respondents_df.rename(
+        columns = {
+            'Recipient Email': 'email',
+            'Recipient First Name': 'first_name',
+            'Recipient Last Name': 'last_name'
+        }
+    )
+
+    # Converting datafram into a list of dictionaries with each dictionary representing a row
+    new_respondents = respondents_df.to_dict(orient = "records")
+
+    response = connection.table("respondents").insert(new_respondents).execute()
+
+    # Creates a dictionary for other tables that can easily access the respondent id based on the email
+    respondent_map = {row["email"] : row["respondent_id"] for row in response.data}
+
+    return respondent_map
 
 
 
