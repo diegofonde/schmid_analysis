@@ -14,6 +14,6 @@ if upload is not None:
 
         upload_df = pd.read_csv(upload)
 
-        map = db.insert_respondant(conn, upload_df)
+        map = db.insert_question(conn, upload_df, 1)
 
         st.json(map)
