@@ -5,7 +5,7 @@ from pathlib import Path
 from supabase import create_client, Client
 
 # Connecting to supabase
-conn = db.get_supabase_client()
+conn = st.session_state.supabase
 
 # Gaining access to the documents folder
 ROOT = Path(__file__).parents[1]

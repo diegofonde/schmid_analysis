@@ -1,4 +1,10 @@
 import streamlit as st
+import db_helpers as db
+from supabase import create_client, Client
+
+# Connecting to supabase which will be shared by the whole webapp
+if "supabase" not in st.session_state:
+    st.session_state.supabase = db.get_supabase_client()
 
 st.set_page_config(page_title = "Schmid College Student Analysis", layout = "wide")
 
