@@ -40,6 +40,8 @@ st.subheader("📂 Upload your Qualtrics survey here: ")
 uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
 if uploaded_file is not None:
+
+    uploaded_df = pd.read_csv(uploaded_file)
     
     survey_name = st.text_input("Enter the survey name: ")
     survey_date = st.date_input("Enter the date the survey was made: ")
@@ -50,8 +52,8 @@ if uploaded_file is not None:
         survey_id = db.insert_survey_info(conn, survey_name, survey_date)
         st.success(f"Uploading information for {survey_id}")
 
-        responded_map = db.insert_respondant(conn, uploaded_file)
+        responded_map = db.insert_respondant(conn, uploaded_df)
         st.success(f"Uploaded {len(responded_map)} responders")
 
-        question_map = db.insert_question(conn, uploaded_file, survey_id)
+        question_map = db.insert_question(conn, uploaded_df, survey_id)
         st.success(f"Uploaded {len(question_map)} questions")
