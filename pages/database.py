@@ -36,13 +36,17 @@ else:
 
 # Let the user upload csv file containing Qualtrics data
 st.subheader("📂 Upload your Qualtrics here: ")
-uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
 
-if uploaded_file is not None:
+survey_name = st.text_input("Enter the survey name: ")
+survey_date = st.date_input("Enter the date the survey was made: ")
 
-    survey_name = st.text_input("Enter the survey name: ")
-    survey_date = st.date_input("Enter the date the survey was made: ")
+if st.button("Enter survey details"):
 
-    if st.button("Submit"):
-        survey_id = db.insert_survey_info(conn, survey_name, survey_date)
-        st.write(survey_id)
+    # Inserting details into the survey table
+    survey_id = db.insert_survey_info(conn, survey_name, survey_date)
+    st.success(f"Uploading information for {survey_id}")
+
+    uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
+
+    if uploaded_file is not None:
+        st.write("Success")
