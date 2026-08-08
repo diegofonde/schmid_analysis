@@ -29,7 +29,10 @@ def insert_survey_info(connection, survey_name, survey_date):
 def insert_respondant(connection, df):
 
     # Obtain needed informataion from the dataframe
-    respondents_df = df[['Recipient Email', 'Recipient First Name', 'Recipient Last Name']].drop_duplicates()
+    respondents_df = df[['Recipient Email', 'Recipient First Name', 'Recipient Last Name']].drop_duplicates(
+        subset = ['Recipient Email'],
+        keep = 'last'
+    )
 
     respondents_df = respondents_df.rename(
         columns = {
@@ -39,7 +42,7 @@ def insert_respondant(connection, df):
         }
     )
 
-    # Converting datafram into a list of dictionaries with each dictionary representing a row
+    # Converting dataframe into a list of dictionaries with each dictionary representing a row
     new_respondents = respondents_df.to_dict(orient = "records")
 
     response = connection.table("respondents").insert(new_respondents).execute()
