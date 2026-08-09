@@ -60,11 +60,7 @@ def insert_respondant(connection, df, survey_id):
 
     clean_date_string = responses_df['Recorded Date'].astype(str).str.replace(r'\s+', ' ', regex=True).str.strip()
 
-    parsed_date = pd.to_datetime(
-        clean_date_string, 
-        format='%m/%d/%Y %I:%M:%S %p',
-        errors='coerce'
-    )
+    parsed_date = pd.to_datetime(clean_date_string, format='mixed')
 
     responses_df['Recorded Date'] = parsed_date.dt.strftime('%Y-%m-%d %H:%M:%S')
 
