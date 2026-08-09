@@ -57,17 +57,19 @@ def insert_respondant(connection, df, survey_id):
     responses_df = cleaned_df[['Recipient Email', 'Recorded Date']].copy()
     responses_df['respondent_id'] = responses_df['Recipient Email'].map(respondent_map)
 
-    responses_df['Recorded Date'] = pd.to_datetime(
+    parsed_date = pd.to_datetime(
         responses_df['Recorded Date'], 
-        format = '%m/%d/%Y %H:%M:%S', 
-        errors = 'coerce'
-    ).dt.strftime('%Y-%m-%d %H:%M:%S')
+        format='%m/%d/%Y %H:%M:%S', 
+        errors='coerce'
+    )
+
+    responses_df['Recorded Date'] = parsed_date.dt.strftime('%Y-%m-%d %H:%M:%S')
 
     new_responses = [
         {
             "survey_id": str(survey_id),
             "respondent_id": str(row['respondent_id']),
-            "submitted_at": str(row['Recorded Date'])
+            "submitted_at": row['Recorded Date']
         }
 
         for row in responses_df.to_dict(orient = 'records')
