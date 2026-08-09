@@ -57,9 +57,11 @@ def insert_respondant(connection, df, survey_id):
     responses_df = cleaned_df[['Recipient Email', 'Recorded Date']].copy()
     responses_df['respondent_id'] = responses_df['Recipient Email'].map(respondent_map)
 
+    clean_date_string = responses_df['Recorded Date'].astype(str).str.replace(r'\s+', ' ', regex=True).str.strip()
+
     parsed_date = pd.to_datetime(
-        responses_df['Recorded Date'], 
-        format='%m/%d/%Y %H:%M:%S', 
+        clean_date_string, 
+        format='%m/%d/%Y %I:%M:%S %p',
         errors='coerce'
     )
 
