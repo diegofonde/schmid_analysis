@@ -53,7 +53,7 @@ if uploaded_file is not None:
         st.session_state["survey_id"] = survey_id
         st.success(f"Uploading information for {survey_id}")
 
-        responded_map = db.insert_respondant(conn, uploaded_df)
+        responded_map, response_map = db.insert_respondant(conn, uploaded_df, survey_id)
         st.session_state["responded_map"] = responded_map
         st.success(f"Uploaded {len(responded_map)} responders")
 
