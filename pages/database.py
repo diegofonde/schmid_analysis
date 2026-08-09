@@ -50,10 +50,13 @@ if uploaded_file is not None:
 
         # Inserting details into the survey table
         survey_id = db.insert_survey_info(conn, survey_name, survey_date)
+        st.session_state["survey_id"] = db.insert_survey_info(conn, survey_name, survey_date)
         st.success(f"Uploading information for {survey_id}")
 
         responded_map = db.insert_respondant(conn, uploaded_df)
+        st.session_state["responded_map"] = responded_map
         st.success(f"Uploaded {len(responded_map)} responders")
 
         question_map = db.insert_question(conn, uploaded_df, survey_id)
+        st.session_state["question_map"] = question_map
         st.success(f"Uploaded {len(question_map)} questions")

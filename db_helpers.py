@@ -62,9 +62,10 @@ def insert_question(connection, df, survey_id):
     new_questions = [
         {
             "question_text": question_text,
-            "survey_id": survey_id
+            "survey_id": survey_id,
+            "position": pos
         }
-        for question_text in questions_list
+        for pos, question_text in enumerate(questions_list, start = 1)
     ]
 
     response = connection.table("questions").insert(new_questions).execute()
