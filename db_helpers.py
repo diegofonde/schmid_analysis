@@ -78,6 +78,12 @@ def insert_respondant(connection, df, survey_id):
         for row in responses_df.to_dict(orient = 'records')
     ]
 
+    for idx, r in enumerate(new_responses):
+        if any(pd.isna(v) for v in r.values()):
+            import streamlit as st
+            st.error(f"Row {idx} contains NaN! Content: {r}")
+            st.stop()
+
     response = connection.table("responses").insert(new_responses).select().execute()
 
     response_map = {row['respondent_id']: row['response_id'] for row in response.data}
