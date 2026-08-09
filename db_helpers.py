@@ -26,13 +26,16 @@ def insert_survey_info(connection, survey_name, survey_date):
     return response.data[0]["survey_id"]
 
 # Function for inserting the respondants into supabase
-def insert_respondant(connection, df):
+def insert_respondant(connection, df, survey_id):
 
-    # Obtain needed informataion from the dataframe
-    respondents_df = df[['Recipient Email', 'Recipient First Name', 'Recipient Last Name']].drop_duplicates(
+    # Removing duplicates from the dataframe in preparation for respondents and responses tables
+    cleaned_df = df.drop_duplicates(
         subset = ['Recipient Email'],
         keep = 'last'
     )
+
+    # Obtain needed informataion from the dataframe for respondents table
+    respondents_df = cleaned_df[['Recipient Email', 'Recipient First Name', 'Recipient Last Name']]
 
     respondents_df = respondents_df.rename(
         columns = {
@@ -45,12 +48,36 @@ def insert_respondant(connection, df):
     # Converting dataframe into a list of dictionaries with each dictionary representing a row
     new_respondents = respondents_df.to_dict(orient = "records")
 
-    response = connection.table("respondents").insert(new_respondents).execute()
+    response = connection.table("respondents").upsert(new_respondents, on_conflict="email").select().execute()
 
     # Creates a dictionary for other tables that can easily access the respondent id based on the email
     respondent_map = {row["email"] : row["respondent_id"] for row in response.data}
 
-    return respondent_map
+    # Matches the respondent id based on the email
+    responses_df = cleaned_df[['Recipient Email', 'Recorded Date']].copy()
+    responses_df['respondent_id'] = responses_df['Recipient Email'].map(respondent_map)
+
+    responses_df['Recorded Date'] = pd.to_datetime(
+        responses_df['Recorded Date'], 
+        format = '%m/%d/%Y %H:%M:%S', 
+        errors = 'coerce'
+    ).dt.strftime('%Y-%m-%d %H:%M:%S')
+
+    new_responses = [
+        {
+            "survey_id": survey_id,
+            "respondent_id": row['respondent_id'],
+            "submitted_at": row['Recorded Date']
+        }
+
+        for row in responses_df.to_dict(orient = 'records')
+    ]
+
+    response = connection.table("responses").insert(new_responses).select().execute()
+
+    response_map = {row['respondent_id']: row['response_id'] for row in response.data}
+
+    return respondent_map, response_map
 
 def insert_question(connection, df, survey_id):
 
