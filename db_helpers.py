@@ -21,7 +21,7 @@ def insert_survey_info(connection, survey_name, survey_date):
         "date": str(survey_date)
     }
 
-    response = connection.table("surveys").insert(new_survey).execute()
+    response = connection.table("surveys").insert(new_survey).select().execute()
 
     return response.data[0]["survey_id"]
 
@@ -95,7 +95,7 @@ def insert_question(connection, df, survey_id):
         for pos, question_text in enumerate(questions_list, start = 1)
     ]
 
-    response = connection.table("questions").insert(new_questions).execute()
+    response = connection.table("questions").insert(new_questions).select().execute()
 
     question_map = {row["question_text"]: row["question_id"] for row in response.data}
 
