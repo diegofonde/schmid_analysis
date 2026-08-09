@@ -65,9 +65,9 @@ def insert_respondant(connection, df, survey_id):
 
     new_responses = [
         {
-            "survey_id": survey_id,
-            "respondent_id": row['respondent_id'],
-            "submitted_at": row['Recorded Date']
+            "survey_id": str(survey_id),
+            "respondent_id": str(row['respondent_id']),
+            "submitted_at": str(row['Recorded Date'])
         }
 
         for row in responses_df.to_dict(orient = 'records')
