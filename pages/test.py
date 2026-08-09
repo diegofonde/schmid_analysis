@@ -14,6 +14,5 @@ if upload is not None:
 
         upload_df = pd.read_csv(upload)
 
-        map = db.insert_question(conn, upload_df, 1)
-
-        st.json(map)
+        st.write("RAW ROW 0 DATE STRING:", repr(upload_df['Recorded Date'].iloc[0]))
+        st.stop()

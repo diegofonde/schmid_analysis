@@ -51,7 +51,7 @@ def insert_respondant(connection, df, survey_id):
     response = connection.table("respondents").upsert(new_respondents, on_conflict="email").select().execute()
 
     # Creates a dictionary for other tables that can easily access the respondent id based on the email
-    respondent_map = {str(row["email"]).strip(): str(row["respondent_id"]) for row in response.data}
+    respondent_map = {row["email"]: row["respondent_id"] for row in response.data}
 
     # Matches the respondent id based on the email
     responses_df = cleaned_df[['Recipient Email', 'Recorded Date']].copy()
