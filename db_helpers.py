@@ -74,12 +74,6 @@ def insert_respondant(connection, df, survey_id):
         for row in responses_df.to_dict(orient = 'records')
     ]
 
-    for idx, r in enumerate(new_responses):
-        if any(pd.isna(v) for v in r.values()):
-            import streamlit as st
-            st.error(f"Row {idx} contains NaN! Content: {r}")
-            st.stop()
-
     response = connection.table("responses").insert(new_responses).select().execute()
 
     response_map = {row['respondent_id']: row['response_id'] for row in response.data}
@@ -107,6 +101,36 @@ def insert_question(connection, df, survey_id):
     question_map = {row["question_text"]: row["question_id"] for row in response.data}
 
     return question_map
+
+def insert_responses(connection, df, question_map, respondent_map, response_map):
+
+    question_list = list(question_map.keys())
+    question_list.append("Recipient Email")
+
+    df_cleaned = df[question_list].copy()
+
+    df_cleaned_long = df_cleaned.melt(
+        id_vars = ['Recipient Email'],
+        value_vars = list(question_map.keys()),
+        var_name = 'Question',
+        value_name = 'Answer'
+    )
+
+    new_answers = [
+        {
+            "question_id": question_map[row['Question']],
+            "response_id": response_map[respondent_map[row['Recipient Email']]],
+            "answer": str(row['Answer'])
+        }
+
+        for row in df_cleaned_long.to_dict(orient = 'records')
+    ]
+
+    response = connection.table("answers").insert(new_answers).select().execute()
+
+    
+
+    print("Test")
 
 
 
