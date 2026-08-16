@@ -79,7 +79,7 @@ with tab1:
             st.session_state["question_map"] = question_map
             st.success(f"Uploaded {len(question_map)} questions")
 
-            responses = db.insert_responses(conn, uploaded_df, question_map, responded_map, response_map, selected_columns)
+            responses = db.insert_responses(conn, uploaded_df, question_map, responded_map, response_map)
             st.success(f"Uploaded {len(responses)} responses")
 
             st.session_state["survey_uploaded"] = True
