@@ -103,7 +103,7 @@ def insert_question(connection, df, survey_id):
 
     return question_map
 
-def insert_responses(connection, df, question_map, respondent_map, response_map, selected_questions):
+def insert_responses(connection, df, question_map, respondent_map, response_map):
 
     question_list = list(question_map.keys())
     question_list.append("Recipient Email")
@@ -117,21 +117,21 @@ def insert_responses(connection, df, question_map, respondent_map, response_map,
         value_name = 'Answer'
     )
 
-    df_cleaned_long['is_cleaned'] = ~df_cleaned_long['Question'].isin(selected_questions)
+    # df_cleaned_long['is_cleaned'] = ~df_cleaned_long['Question'].isin(selected_questions)
 
-    df_cleaned_long['clean_answer'] = np.where(
-        df_cleaned_long['is_cleaned'],
-        df_cleaned_long['Answer'],
-        ""
-    )
+    # df_cleaned_long['clean_answer'] = np.where(
+    #     df_cleaned_long['is_cleaned'],
+    #     df_cleaned_long['Answer'],
+    #     ""
+    # )
 
     new_answers = [
         {
             "question_id": question_map[row['Question']],
             "response_id": response_map[respondent_map[row['Recipient Email']]],
             "answer": str(row['Answer']),
-            "clean_answer": str(row['clean_answer']),
-            "is_cleaned": row['is_cleaned']
+            "clean_answer": "",
+            "is_cleaned": 0
         }
 
         for row in df_cleaned_long.to_dict(orient = 'records')

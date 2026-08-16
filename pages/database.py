@@ -41,7 +41,7 @@ tab1, tab2, tab3 = st.tabs([
 ])
 
 with tab1:
-    
+
     # Let the user upload csv file containing Qualtrics data
     st.subheader("📂 Upload your Qualtrics survey here: ")
 
@@ -56,15 +56,15 @@ with tab1:
 
         question_list = uploaded_df.iloc[:, 15:].columns.to_list()
         
-        st.write("Select the questions for cleaning: ")
-        selected_columns = st.multiselect(
-            label = "Select your questions",
-            options = question_list,
-        )
+        # st.write("Select the questions for cleaning: ")
+        # selected_columns = st.multiselect(
+        #     label = "Select your questions",
+        #     options = question_list,
+        # )
 
         if st.button("Enter survey details"):
 
-            st.session_state["selected_columns"] = selected_columns
+            # st.session_state["selected_columns"] = selected_columns
 
             # Inserting details into the survey table
             survey_id = db.insert_survey_info(conn, survey_name, survey_date)
