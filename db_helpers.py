@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 import pandas as pd
 from supabase import create_client, Client
 
@@ -102,7 +103,7 @@ def insert_question(connection, df, survey_id):
 
     return question_map
 
-def insert_responses(connection, df, question_map, respondent_map, response_map):
+def insert_responses(connection, df, question_map, respondent_map, response_map, selected_questions):
 
     question_list = list(question_map.keys())
     question_list.append("Recipient Email")
@@ -116,11 +117,21 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
         value_name = 'Answer'
     )
 
+    df_cleaned_long['is_cleaned'] = ~df_cleaned_long['Question'].isin(selected_questions)
+
+    df_cleaned_long['clean_answer'] = np.where(
+        df_cleaned_long['is_cleaned'],
+        df_cleaned_long['Answer'],
+        ""
+    )
+
     new_answers = [
         {
             "question_id": question_map[row['Question']],
             "response_id": response_map[respondent_map[row['Recipient Email']]],
-            "answer": str(row['Answer'])
+            "answer": str(row['Answer']),
+            "clean_answer": str(row['clean_answer']),
+            "is_cleaned": row['is_cleaned']
         }
 
         for row in df_cleaned_long.to_dict(orient = 'records')
@@ -128,13 +139,15 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
 
     response = connection.table("answers").insert(new_answers).select().execute()
 
-    
+    return response.data
 
-    print("Test")
+def uncleaned_answers(connection):
 
+    response = (
+            connection.table("answers")
+            .select("answer_id, questions(question_text), answer, clean_answer" )
+            .eq("clean_answer", "")
+            .execute()
+        )
 
-
-
-
-
-
+    return response.data

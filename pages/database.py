@@ -34,29 +34,59 @@ if schema_png_path.is_file():
 else:
     st.error(f"Could not find PDF file at {schema_png_path}")
 
-# Let the user upload csv file containing Qualtrics data
-st.subheader("📂 Upload your Qualtrics survey here: ")
+tab1, tab2, tab3 = st.tabs([
+    "Uploading raw survey data",
+    "Obtaining answers to be cleaned",
+    "Uploading clean answers"
+])
 
-uploaded_file = st.file_uploader("Upload SQLite file", type = "csv")
-
-if uploaded_file is not None:
-
-    uploaded_df = pd.read_csv(uploaded_file)
+with tab1:
     
-    survey_name = st.text_input("Enter the survey name: ")
-    survey_date = st.date_input("Enter the date the survey was made: ")
+    # Let the user upload csv file containing Qualtrics data
+    st.subheader("📂 Upload your Qualtrics survey here: ")
 
-    if st.button("Enter survey details"):
+    uploaded_file = st.file_uploader("Upload csv file", type = "csv")
 
-        # Inserting details into the survey table
-        survey_id = db.insert_survey_info(conn, survey_name, survey_date)
-        st.session_state["survey_id"] = survey_id
-        st.success(f"Uploading information for {survey_id}")
+    if uploaded_file is not None:
 
-        responded_map, response_map = db.insert_respondant(conn, uploaded_df, survey_id)
-        st.session_state["responded_map"] = responded_map
-        st.success(f"Uploaded {len(responded_map)} responders")
+        uploaded_df = pd.read_csv(uploaded_file)
+        
+        survey_name = st.text_input("Enter the survey name: ")
+        survey_date = st.date_input("Enter the date the survey was made: ")
 
-        question_map = db.insert_question(conn, uploaded_df, survey_id)
-        st.session_state["question_map"] = question_map
-        st.success(f"Uploaded {len(question_map)} questions")
+        question_list = uploaded_df.iloc[:, 15:].columns.to_list()
+        
+        st.write("Select the questions for cleaning: ")
+        selected_columns = st.multiselect(
+            label = "Select your questions",
+            options = question_list,
+        )
+
+        if st.button("Enter survey details"):
+
+            st.session_state["selected_columns"] = selected_columns
+
+            # Inserting details into the survey table
+            survey_id = db.insert_survey_info(conn, survey_name, survey_date)
+            st.session_state["survey_id"] = survey_id
+            st.success(f"Uploading information for {survey_id}")
+
+            responded_map, response_map = db.insert_respondant(conn, uploaded_df, survey_id)
+            st.session_state["responded_map"] = responded_map
+            st.success(f"Uploaded {len(responded_map)} responders")
+
+            question_map = db.insert_question(conn, uploaded_df, survey_id)
+            st.session_state["question_map"] = question_map
+            st.success(f"Uploaded {len(question_map)} questions")
+
+            responses = db.insert_responses(conn, uploaded_df, question_map, responded_map, response_map, selected_columns)
+            st.success(f"Uploaded {len(responses)} responses")
+
+            st.session_state["survey_uploaded"] = True
+
+
+
+
+
+            
+        
