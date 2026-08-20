@@ -13,5 +13,5 @@ dashboard_page = st.Page("pages/dashboard.py", title = "Interactive Dashboard", 
 model_page = st.Page("pages/model.py", title = "PAM Model", icon = "📲", default = False)
 database_page = st.Page("pages/database.py", title = "Database", icon = "💾", default = False)
 
-pg = st.navigation([home_page, dashboard_page, model_page, database_page, test_page])
+pg = st.navigation([home_page, dashboard_page, model_page, database_page])
 pg.run()
