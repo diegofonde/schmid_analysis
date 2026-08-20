@@ -55,12 +55,6 @@ with tab1:
         survey_date = st.date_input("Enter the date the survey was made: ")
 
         question_list = uploaded_df.iloc[:, 15:].columns.to_list()
-        
-        # st.write("Select the questions for cleaning: ")
-        # selected_columns = st.multiselect(
-        #     label = "Select your questions",
-        #     options = question_list,
-        # )
 
         if st.button("Enter survey details"):
 

@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import requests
 import plotly.express as px
-import plotly.graph_objects as go
 
 st.title("📲 PAM Clustering Model")
 st.markdown("""
