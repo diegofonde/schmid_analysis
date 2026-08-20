@@ -11,6 +11,7 @@ designed to bring our Qualtrics survey responses to life.
 * 👤 **Student Profile:** Understand key demographics of students who responded to the survey.
 * 📈 **Resource Analysis:** Deep dive analysis into resource use and student resource preference.
 * 🤝 **Schmid Environment & Sense of Belonging:** Discover how Schmid students feel about the college based on major.
+* 
 
 *Click on the filters on the side to filter dynamically, and explore the insights at your own pace.*
 """)

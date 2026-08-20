@@ -83,7 +83,7 @@ def insert_respondant(connection, df, survey_id):
 
 def insert_question(connection, df, survey_id):
 
-    df_questions = df.iloc[:, 15:]
+    df_questions = df.iloc[:, 17:]
 
     # Obtaining the questions from the columns of the dataframe into a list
     questions_list = df_questions.columns.tolist()
@@ -116,14 +116,6 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
         var_name = 'Question',
         value_name = 'Answer'
     )
-
-    # df_cleaned_long['is_cleaned'] = ~df_cleaned_long['Question'].isin(selected_questions)
-
-    # df_cleaned_long['clean_answer'] = np.where(
-    #     df_cleaned_long['is_cleaned'],
-    #     df_cleaned_long['Answer'],
-    #     ""
-    # )
 
     new_answers = [
         {
