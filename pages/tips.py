@@ -30,8 +30,21 @@ with tab1:
     st.markdown("""
     **Origins of the project:** Orginally, the project involved creating different visualizations of the qualtrics data using excel. 
     While excel did help and giving a simple understanding of the data, I felt that with the amount of questions the survey contained, 
-    there were ways to ways that the data can be analyzed. (Ex: Analyzing by program, by student year)
+    there were ways to ways that the data can be analyzed. (Ex: Analyzing by progra or by student year)
 
     With this realization, I decided that Tableau was the best tool for the job due to its features of **dashboard building** and use of **dynamic filters**.
 
+    When making the dashboards there are 2 essential steps in preparing them:
+    1. Data Cleaning 
+    2. Data Grouping
+
+    #### 1) Data Cleaning
+    
+
     """)
+with tab2:
+
+    st.markdown()
+with tab3: 
+
+    st.markdown()
