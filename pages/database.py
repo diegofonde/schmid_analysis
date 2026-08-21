@@ -16,7 +16,7 @@ st.title("Database page 💾")
 st.markdown("""
 Welcome to the database page!
 
-This system uses **SQLite** to efficiently store, structure, and manage survey responses exported from **Qualtrics**. 
+This system uses a **PostgreSQL** database hosted in Supabase to efficiently store, structure, and manage survey responses exported from **Qualtrics**. 
 
 **Key Objectives:**
 * **Scalability:** Easily ingest and organize future survey runs within a unified schema.
