@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Tips and notes for the next employee!!!")
+st.title("Tips and notes for the next employee!!!📝")
 
 st.markdown("""
 Welcome to the page dedicated for tips and notes! This page contains notes that will hopefully help future employees of this position 

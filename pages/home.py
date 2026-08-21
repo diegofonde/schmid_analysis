@@ -39,6 +39,7 @@ Orginally my role as a Student Assistant started off simple data cleaning and an
 1. **📊Page Dedicated for Dashboard:** View macro-level metrics and trends instantly.
 2. **📲Clustering Algorithm:** Access the machine learning pipeline to segment profiles.
 3. **💾Supabase:** Connect to PostgreSQL database storing schmid survey data for the year 2025-2026.
+4. **📝Tips:** Notes talking about the project and how to replicate/improve on it.
             
 This webapp is still a WIP, and developments are ongoing.
 
