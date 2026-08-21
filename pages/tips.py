@@ -15,7 +15,7 @@ To the next student taking up the role, I truly hope that these notes help you n
 I know that the role does have big shoes to fill, but as along as you have the eagerness to learn you'll do great!
 If you ever need any help, feel free to contact me! 
 
-- Diego Fondevilla :)
+-- Diego Fondevilla :)
 
 """)
 
@@ -62,7 +62,30 @@ with tab1:
     """, unsafe_allow_html=True)
 with tab2:
 
-    st.markdown("""""")
+    st.markdown("""
+    #### How the idea of the model came to be
+    After the creation of the dashboards, I was eager to implement my Machine Learning skills as a Data Scientist. I realized that while the filters I had in Tableau were useful, it was challening having to use different combinations of filters just to analyze a 
+    specific group of students. That problem gave me idea of using unsupervised learning to create labels for student groups using the most prominent variables in the dataset. The variables that were used in the model are also variables that are very likely to be collected
+    again in future, so creating a Machine Learning model that can also be used for future surveys became the next goal I wanted to accomplish. 
+
+    #### Creation of the model
+    First steps in creating the model was researching which model is the best one that can help solve the problem with the data I have. This lead to two possible options, a PAM model or a Hierarichal model.
+    For more information of the process, check my [Github](https://github.com/diegofonde/schmid_analysis) and navigate to the models folder where you can see the ipynb file containing the code for creating the model.
+
+    #### Putting the model into production
+    Once the model creation is complete, the next step was to put it into production for future use. To be honest, the the exact steps I took to do that are hard to explain but I can give a general rundown of how I did it and what tools I used. 
+    1. Downloading the metrics of the model, in this case it is the centroids of the clusters. 
+    2. Creating APIs using FastAPI library that can help input data into model and retrieve results.
+    3. Host your model on Render where you can use your APIs to connect to the model.
+    4. Have a simple frontend like Streamlit where you can show your model works. 
+
+    I definitely recommend you to do a lot of research on this, and take your time finding out how to implement it yourself. 
+
+    #### Final Notes
+    If you were to use this model for future projects, it is important to continually evaluate the model with new data since if there is data that a model is not familiar with, you may have to retrain the model or most likely make a new one. Ideally
+    I wanted to be able to connect my model to help cluster student data that gets entered to my hosted database, but due to time and complexity I was unable to do that. Being able to create a model and put it into production is a huge skill to add 
+    to your resume, so I highly recommend at least trying to learn how to do it, but for the job it isn't as necessary.
+    """)
 with tab3: 
 
     st.markdown("""""")
