@@ -48,7 +48,15 @@ with tab1:
     Once you have the data cleaned the next best thing to start planning for is figuring out which data or groups of questions should be grouped together as invididual dashboards. A good 
     starting point to figuring it out is checking out the qualtrics survey itself since often times those questions are already grouped together in their respective blocks. 
 
-    Once you have everything figure out 
+    #### Notes about design
+    Once you have everything figure out, it all comes down now to how you design your sheets and dashboards. Something I found useful was using colors consistently for certain answers (Ex: Green for yes, red for no), 
+    ensuring sheets have consitent metrics (Ex: Using percentage of total how your metrics in bar charts), and experementing with different charts that can properly help say my intended story. For tips on good dashboard design,
+    I highly recommend checking out online examples and trying to replicate them! Once you have your final dashboards, you can host it through Tableau Public so that Kate can see your progress, and it can act as a personal portfolio.
+
+    #### Final Notes
+    While I do think that the design of the dashboards were good overall, there are definitely improvements that could be made with the filters itself. The biggest issues the filters had was that sometimes it would take too long 
+    for the software to filter out data, sometimes it can take 10 seconds before a single filter works. To solve this, I wanted to make a SQL based database wherein the data would already be normalized, allowing for much better performance in filtering.
+    You can find more information about this in the <u>💾 Creation and handling of SQL based databases</u> tab 
 
     """)
 with tab2:
