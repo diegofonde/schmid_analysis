@@ -37,7 +37,7 @@ Because the dataset contained mixed data types (categorical survey responses and
 ### 3. Production Pipeline
 [Qualtrics Raw Data] ➡️ [SQLite Database] ➡️ [PAM Clustering Model] ➡️ [FastAPI Backend] ➡️ [Streamlit Live UI]
 
-* Wrapped the final trained PAM model in a lightweight **FastAPI** application[cite: 1].
+* Wrapped the final trained PAM model in a lightweight **FastAPI** application.
 * Deployed the API to **Render** to serve real-time predictions based on new user survey inputs via a custom-built **Streamlit** dashboard.
 
 ---
@@ -47,7 +47,7 @@ Because the dataset contained mixed data types (categorical survey responses and
 ├── data/                  # Excel files containing data used to train the model
 ├── models/                # .inpynb notebooks used for EDA and model creation
 ├── pages/                 # Streamlit pages
-├── api.py                 # FastAPI application script logic**
+├── api.py                 # FastAPI application script logic
 ├── app.py                 # Streamlit user interface code
 ├── pam_app_assets.pkl     # Trained PAM clustering model objects (.pkl / .rds)
 └── README.md
