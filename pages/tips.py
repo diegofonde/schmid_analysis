@@ -36,15 +36,24 @@ with tab1:
 
     When making the dashboards there are 2 essential steps in preparing them:
     1. Data Cleaning 
-    2. Data Grouping
+    2. Dashboard Grouping
 
     #### 1) Data Cleaning
-    
+    Data cleaning is important since not only do you need to ensure that the raw data can be transformed to actionable insights, but you would also need 
+    to prepare the data in a way where in users can have multiple answers for the same question that can still be filtered dynamically.
+
+    For the step by step process of how I did this, you can view it through this [Link](https://docs.google.com/document/d/1wynZxW1BWdYdv1EKf-MilKp-ROpnr6NEnZRDe1LdHUE/edit?usp=sharing).
+
+    #### 2) Dashboard Grouping
+    Once you have the data cleaned the next best thing to start planning for is figuring out which data or groups of questions should be grouped together as invididual dashboards. A good 
+    starting point to figuring it out is checking out the qualtrics survey itself since often times those questions are already grouped together in their respective blocks. 
+
+    Once you have everything figure out 
 
     """)
 with tab2:
 
-    st.markdown()
+    st.markdown("""""")
 with tab3: 
 
-    st.markdown()
+    st.markdown("""""")
