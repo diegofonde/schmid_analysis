@@ -28,7 +28,7 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
 
     st.markdown("""
-    **Origins of the project: ** Orginally, the project involved creating different visualizations of the qualtrics data using excel. 
+    **Origins of the project:** Orginally, the project involved creating different visualizations of the qualtrics data using excel. 
     While excel did help and giving a simple understanding of the data, I felt that with the amount of questions the survey contained, 
     there were ways to ways that the data can be analyzed. (Ex: Analyzing by program, by student year)
 
