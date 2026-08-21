@@ -56,9 +56,9 @@ with tab1:
     #### Final Notes
     While I do think that the design of the dashboards were good overall, there are definitely improvements that could be made with the filters itself. The biggest issues the filters had was that sometimes it would take too long 
     for the software to filter out data, sometimes it can take 10 seconds before a single filter works. To solve this, I wanted to make a SQL based database wherein the data would already be normalized, allowing for much better performance in filtering.
-    You can find more information about this in the <u>💾 Creation and handling of SQL based databases</u> tab 
+    You can find more information about this in the <u>💾 Creation and handling of SQL based databases</u> tab. 
 
-    """)
+    """, unsafe_allow_html=True)
 with tab2:
 
     st.markdown("""""")
