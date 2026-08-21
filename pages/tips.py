@@ -88,4 +88,22 @@ with tab2:
     """)
 with tab3: 
 
-    st.markdown("""""")
+    st.markdown("""
+    #### Why create a Database
+    Assides from the fact that databases are really useful for storing data, it is a key part of helping automate everything surrounding the project. By connecting the database to Tableau, data can be automatically be updated while also allowing for efficient filtering. 
+    Connecting the hosted clustering algorithm allows for the automatic clustering of students as soon as the data related to them is entered. There are a lot of benefits of using a SQL based database if it is properly implemented.
+
+    #### Tools and Important concepts
+    To create a database, remember concepts such as Normalization while designing it in order to ensure data is stored and can be interacted with efficiently. I use a website called [dbdiagram.io](https://dbdiagram.io/home) to help visualize the design, and it makes it 
+    really use to export it out for any existing database. I hosted the database on a platform called [Supabase](https://supabase.com) since it is very useful to ensuring data security.
+
+    #### Supabase
+    Supabase uses a specific type of SQL called PostgreSQL. Through it you can add different functions that can help automatically give out ids to certain tables of data, or functions that can help retrieve data a specific way. I highly recommend to learn about the different 
+    features in your own time since if you were to use it or something similar, it can help make managing data a lot easier. 
+
+    #### Final notes
+    The biggest issue I had with the database is finding the best way to upload data while also storing both the raw and cleaned version of responses. Without this feature, it would be hard to be able to upload raw responses while also letting future employees clean the data in their own way.
+    If this feature gets figured out, it will help in connecting the cleaned data to tableau for dashboard creation (though you would have to redesign it differently from how I originally did it), and help with letting the model cluster data. For now, I have added a feature that will let you download 
+    the data in its normalized form which will let you find new ways to design the dasboard. Hopefully this feature can help with your future work!
+
+    """)
