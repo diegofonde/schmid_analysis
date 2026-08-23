@@ -93,12 +93,7 @@ API_URL_MEDOIDS =  "https://schmid-student-segmentation-api.onrender.com/medoids
 st.subheader("📂 Upload your dataset here: ")
 uploaded_file = st.file_uploader("Upload a CSV file", type = ["csv"])
 
-st.markdown("""*Ensure uploaded csv file has columns for needed variables named under actual qualtrics survey question*""")
-st.image(
-    str(model_png_path),
-    caption = "Sample data",
-    use_container_width = True
-)
+st.markdown("""*Ensure uploaded csv file column named for needed variables is reflective of actual qualtrics survey question*""")
 
 if uploaded_file is not None:
 
