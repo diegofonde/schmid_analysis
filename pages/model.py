@@ -3,6 +3,10 @@ import pandas as pd
 import numpy as np
 import requests
 import plotly.express as px
+from pathlib import Path
+
+ROOT = Path(__file__).parents[1]
+model_png_path = ROOT/"files"/"PNG"/"model_data.png"
 
 st.title("📲 PAM Clustering Model")
 st.markdown("""
@@ -88,6 +92,13 @@ API_URL_MEDOIDS =  "https://schmid-student-segmentation-api.onrender.com/medoids
 
 st.subheader("📂 Upload your dataset here: ")
 uploaded_file = st.file_uploader("Upload a CSV file", type = ["csv"])
+
+st.markdown("""*Ensure uploaded csv file has columns for needed variables named under actual qualtrics survey question*""")
+st.image(
+    str(model_png_path),
+    caption = "Sample data",
+    use_container_width = True
+)
 
 if uploaded_file is not None:
 
