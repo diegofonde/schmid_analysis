@@ -5,16 +5,15 @@ import streamlit as st
 API_URL_PREDICT =  "https://schmid-student-segmentation-api.onrender.com/predict" # API URL for API prediction hosted in Render
 API_URL_MEDOIDS =  "https://schmid-student-segmentation-api.onrender.com/medoids" # API URL for API medoids hosted in Render
 
-def predict(df):
+def predict(student_list):
 
-    student_list = df.to_dict(orient = "records") # Converts dataframe to a dictionary 
-    payload = {"students": student_list} # List that contains dictionary of student information to match API
+    payload = {"students": student_list}
 
     with st.spinner("Calculating..."):
 
         try:
 
-            response = requests.post(API_URL_PREDICT, json = payload)
+            response = requests.post(API_URL_PREDICT, json = payload, timeout = 90)
 
             if response.status_code == 200:
         
@@ -24,8 +23,8 @@ def predict(df):
 
                 new_predictions = [
                     {
-                        "respondent_id": df['respondent_id'].iloc[i],
-                        "cluster_id": pred['group'],
+                        "respondent_id": student_list[i].get('respondent_id'),
+                        "cluster_id": pred.get('group'),                    
                     }
                     for i, pred in enumerate(predictions)
                 ]
