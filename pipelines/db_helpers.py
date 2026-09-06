@@ -116,6 +116,13 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
         value_name = 'Answer'
     )
 
+    # Remove rows from long dataset that are NA
+    df_cleaned_long = df_cleaned_long.dropna(subset=['Answer'])
+
+    df_cleaned_long = df_cleaned_long[
+        ~df_cleaned_long['Answer'].astype(str).str.strip().str.lower().isin(['nan', 'none', 'null', ''])
+    ]
+
     new_answers = [
         {
             "question_id": question_map[row['Question']],
