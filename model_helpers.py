@@ -32,20 +32,13 @@ def predict(student_list):
                 return new_predictions
             
             # Explicit error handling UI
-            st.error(f"The API returned an error code: {response.status_code}")
-            st.caption(f"Error Details: {response.text}")
-            return None
+            return f"API Error {response.status_code}: {response.text}"
             
         except requests.exceptions.Timeout:
-            st.error("Request timed out.")
-            st.info("Render free-tier web services spin down after inactivity. Give it 60 seconds to wake up and try again.")
-            return None
+            return "Request timed out. Render free-tier web services may take up to 60 seconds to wake up."
 
         except requests.exceptions.ConnectionError:
-            st.error("Could not establish connection to the server.")
-            st.info("If the server has been inactive, Render may take up to 60 seconds to wake up.")
-            return None
+            return "Could not establish connection to the server. Render may be sleeping."
 
         except Exception as e:
-            st.error(f"An unexpected error occurred: {str(e)}")
-            return None
+            return f"An unexpected error occurred: {str(e)}"
