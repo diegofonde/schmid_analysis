@@ -122,7 +122,6 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
             "response_id": response_map[respondent_map[row['Recipient Email']]],
             "answer": str(row['Answer']),
             "clean_answer": "",
-            "is_cleaned": 0
         }
 
         for row in df_cleaned_long.to_dict(orient = 'records')
