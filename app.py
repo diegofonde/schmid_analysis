@@ -1,5 +1,5 @@
 import streamlit as st
-import db_helpers as db
+from pipelines import db_helpers as db
 from supabase import create_client, Client
 
 # Connecting to supabase which will be shared by the whole webapp
