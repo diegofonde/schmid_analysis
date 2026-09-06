@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import db_helpers as db
+from pipelines import db_helpers as db
 from pathlib import Path
 
 # Connecting to supabase
