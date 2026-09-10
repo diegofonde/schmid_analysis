@@ -158,6 +158,13 @@ def get_uncleaned_answers(connection):
 
 def upload_cleaned_answers(connection, clean_list):
 
-    response = connection.table("answers").upsert(clean_list).execute()
-
+    response = (
+        connection.table("answers")
+        .upsert(
+            clean_list, 
+            on_conflict="answer_id",
+            ignore_duplicates=False  # Forces an UPDATE on matching primary keys
+        )
+        .execute()
+    )
     return len(response)
