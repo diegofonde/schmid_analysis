@@ -155,3 +155,9 @@ def get_uncleaned_answers(connection):
         )
 
     return response.data
+
+def upload_cleaned_answers(connection, clean_list):
+
+    response = connection.table("answers").upsert(clean_list).execute()
+
+    return len(response)
