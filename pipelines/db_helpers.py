@@ -138,18 +138,17 @@ def insert_responses(connection, df, question_map, respondent_map, response_map)
 
     return response.data
 
-def uncleaned_answers(connection):
+def get_uncleaned_answers(connection):
 
     commuting_question = "How many minutes is your typical commute (one way)? *this includes walking, biking, driving, or public transit time"
     working_question = "How many hours per week do you typically work?"
     credits_question = "How many credits are you enrolled in this semester?"
-    labs_question = "How many lab courses are you enrolled in this semester?"
     
-    question_list = [commuting_question, working_question, credits_question, labs_question]
+    question_list = [commuting_question, working_question, credits_question]
 
     response = (
             connection.table("answers")
-            .select("answer_id, answer, clean_answer, questions!inner(question_text)")
+            .select("answer_id, answer, questions!inner(question_text)")
             .in_("questions.question_text", question_list)
             .eq("clean_text_answer", "")
             .execute()

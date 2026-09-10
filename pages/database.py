@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pipelines import db_helpers as db
+from pipelines import data_cleaner_helpers as dc
 from pathlib import Path
 
 # Connecting to supabase
@@ -76,6 +77,12 @@ with tab1:
             st.success(f"Uploaded {len(responses)} responses")
 
             st.session_state["survey_uploaded"] = True
+
+            unclean_student_list = db.get_uncleaned_answers()
+            # clean_student_list = dc.clean_raw_data(unclean_student_list)
+            
+
+
 
 
 
