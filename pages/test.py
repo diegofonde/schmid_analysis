@@ -7,7 +7,9 @@ conn = st.session_state.supabase
 st.title("Testing Page")
 
 unclean_student_list = db.get_uncleaned_answers(conn)
+st.json(unclean_student_list)
 clean_student_list = dc.clean_raw_data(unclean_student_list)
+st.json(clean_student_list)
 submission = db.upload_cleaned_answers(conn, clean_student_list)
 
 st.success(f"Submitted {submission} clean answers.")
