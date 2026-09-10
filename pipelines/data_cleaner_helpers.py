@@ -3,6 +3,10 @@ import numpy as np
 
 def clean_raw_data(student_data):
 
+    # Guard against empty lists
+    if not student_data: 
+        return []
+
     commuting_question = "How many minutes is your typical commute (one way)? *this includes walking, biking, driving, or public transit time"
     working_question = "How many hours per week do you typically work?"
     credits_question = "How many credits are you enrolled in this semester?"

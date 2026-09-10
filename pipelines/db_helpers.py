@@ -148,7 +148,7 @@ def get_uncleaned_answers(connection):
 
     response = (
             connection.table("answers")
-            .select("answer_id, answer, questions!inner(question_text)")
+            .select("answer_id, answer, questions!question_id!inner(question_text)") # Explicityly telling PostGres that this is a single foreign key relation
             .in_("questions.question_text", question_list)
             .is_("clean_answer", "null")
             .execute()
