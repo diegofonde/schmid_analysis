@@ -150,7 +150,7 @@ def get_uncleaned_answers(connection):
             connection.table("answers")
             .select("answer_id, answer, questions!inner(question_text)")
             .in_("questions.question_text", question_list)
-            .eq("clean_text_answer", "")
+            .is_("clean_answer", "null")
             .execute()
         )
 
