@@ -7,6 +7,12 @@ def clean_raw_data(student_data):
     if not student_data: 
         return []
 
+    # Flatten the list of columns for questions into a single questions.question_text column
+    if 'questions' in student_data_pd.columns and not student_data_pd.empty:
+        student_data_pd['questions.question_text'] = student_data_pd['questions'].apply(
+            lambda x: x[0]['question_text'] if isinstance(x, list) and len(x) > 0 else (x.get('question_text') if isinstance(x, dict) else None)
+    )
+
     commuting_question = "How many minutes is your typical commute (one way)? *this includes walking, biking, driving, or public transit time"
     working_question = "How many hours per week do you typically work?"
     credits_question = "How many credits are you enrolled in this semester?"
