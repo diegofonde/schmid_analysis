@@ -158,15 +158,7 @@ def get_uncleaned_answers(connection):
 
 def upload_cleaned_answers(connection, clean_list):
 
-    # For loop for batch uploading of cleaned answers
-    for row in clean_list: 
-        response = (
-            connection.table("answers")
-            .update(
-                {"clean_answer": row["clean_answer"]}
-            )
-            .eq("answer_id", row["answer_id"])
-            .execute()
-        )
+    # Sends entire payload in 1 HTTP call
+    connection.rpc("bulk_update_clean_answers", {"payload": clean_list}).execute
 
     return len(clean_list)

@@ -9,6 +9,5 @@ st.title("Testing Page")
 unclean_student_list = db.get_uncleaned_answers(conn)
 clean_student_list = dc.clean_raw_data(unclean_student_list)
 submission = db.upload_cleaned_answers(conn, clean_student_list)
-
 st.success(f"Submitted {submission} clean answers.")
 
