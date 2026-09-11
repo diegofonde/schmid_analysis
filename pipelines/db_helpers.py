@@ -158,13 +158,15 @@ def get_uncleaned_answers(connection):
 
 def upload_cleaned_answers(connection, clean_list):
 
-    response = (
-        connection.table("answers")
-        .upsert(
-            clean_list, 
-            on_conflict="answer_id",
-            ignore_duplicates=False  # Forces an UPDATE on matching primary keys
+    # For loop for batch uploading of cleaned answers
+    for row in clean_list: 
+        response = (
+            connection.table("answers")
+            .update(
+                {"clean_answer": row["clean_answer"]}
+            )
+            .eq("answer_id", row["answer_id"])
+            .execute()
         )
-        .execute()
-    )
-    return len(response)
+
+    return len(clean_list)
