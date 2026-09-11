@@ -18,7 +18,7 @@ def clean_raw_data(student_data):
     # Cleaning for the commuting_question
     m_commute = student_data_pd['questions.question_text'] == commuting_question
     student_data_pd.loc[m_commute, 'clean_answer'] = np.where(
-        student_data_pd.loc[m_commute, 'answer'] == '0-15 mins', 
+        student_data_pd.loc[m_commute, 'answer'] == '0-15 minutes', 
         'non-commuter', 
         'commuter'
     )
@@ -26,7 +26,7 @@ def clean_raw_data(student_data):
     # Cleaning for the working_question 
     m_work = student_data_pd['questions.question_text'] == working_question
     student_data_pd.loc[m_work, 'clean_answer'] = np.where(
-        student_data_pd.loc[m_work, 'answer'] == '0', 
+        student_data_pd.loc[m_work, 'answer'] == '0 hours', 
         'non-working', 
         'working'
     )
