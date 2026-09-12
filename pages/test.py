@@ -22,7 +22,7 @@ with st.spinner("Fetching data from Supabase..."):
     predictions = mh.predict(raw_json)
 
 print(predictions)
-st.json(predictions)
+# st.json(predictions)
 
 
 
