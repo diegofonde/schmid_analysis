@@ -25,8 +25,12 @@ def clean_raw_data(student_data):
 
     # Cleaning for the working_question 
     m_work = student_data_pd['questions.question_text'] == working_question
-    student_data_pd.loc[m_work, 'clean_answer'] = np.where(
-        student_data_pd.loc[m_work, 'answer'] == '0 hours', 
+
+    work_answers = student_data_pd.loc[m_work, 'answer'].fillna('').astype(str).str.strip().str.lower() # Check if the actual answers are empty, null, or 'nan'
+    is_empty_or_null = work_answers.isin(['', 'nan', 'none', 'null'])
+
+    student_data_pd.loc[m_work, 'clean_answer'] = np.where( # Assigns category based on whether or not the cell is empty
+        is_empty_or_null, 
         'non-working', 
         'working'
     )
