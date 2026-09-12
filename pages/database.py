@@ -78,9 +78,13 @@ with tab1:
 
             st.session_state["survey_uploaded"] = True
 
-            # unclean_student_list = db.get_uncleaned_answers()
-            # clean_student_list = dc.clean_raw_data(unclean_student_list)
+            unclean_student_list = db.get_uncleaned_answers(conn)
+            clean_student_list = dc.clean_raw_data(unclean_student_list)
+            submission = db.upload_cleaned_answers(conn, clean_student_list)
+            st.success(f"Submitted {submission} clean answers.")
+
             
+                        
 
 
 
