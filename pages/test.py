@@ -18,5 +18,10 @@ raw_json = response.data
 model_input_df = pd.DataFrame(raw_json)
 st.dataframe(model_input_df, use_container_width=True)
 
+with st.spinner:
+    predictions = mh.predict(raw_json)
+
+st.json(predictions)
+
 
 
