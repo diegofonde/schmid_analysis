@@ -21,8 +21,7 @@ st.dataframe(model_input_df, use_container_width=True)
 with st.spinner("Fetching data from Supabase..."):
     predictions = mh.predict(raw_json)
 
-st.error(predictions)
-# st.json(predictions)
+st.json(predictions)
 
 
 
