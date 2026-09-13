@@ -166,6 +166,6 @@ def upload_cleaned_answers(connection, clean_list):
 def upload_clusters(connection, clustered_list):
 
     # Sends entire payload in 1 HTTP call
-    connection.rpc("upload_clusters", {"payload": clustered_list}).execute()
+    connection.rpc("update_clusters", {"payload": clustered_list}).execute()
 
     return len(clustered_list)
