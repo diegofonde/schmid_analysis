@@ -21,10 +21,8 @@ st.dataframe(model_input_df, use_container_width=True)
 with st.spinner("Fetching data from Supabase..."):
     predictions = mh.predict(raw_json)
 
-clean_predictions = list(predictions.values())
-
 with st.spinner("Uploading cluster intomartion..."):
-    clustered_results = db.upload_clusters(clean_predictions)
+    clustered_results = db.upload_clusters(predictions)
 
 
 
