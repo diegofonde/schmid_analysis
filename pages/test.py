@@ -22,7 +22,7 @@ with st.spinner("Fetching data from Supabase..."):
     predictions = mh.predict(raw_json)
 
 with st.spinner("Uploading cluster intomartion..."):
-    clustered_results = db.upload_clusters(predictions)
+    clustered_results = db.upload_clusters(conn, predictions)
 
 
 
